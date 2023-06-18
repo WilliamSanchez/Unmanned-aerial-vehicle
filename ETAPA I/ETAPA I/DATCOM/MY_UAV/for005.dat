@@ -1,0 +1,68 @@
+DIM M
+DERIV DEG
+DAMP
+PART
+ $FLTCON WT=0.750, LOOP=1.0,
+  NMACH=1.0, MACH(1)=0.02559,
+ NALT=1.0, ALT(1)=500.0,
+ NALPHA=20.0,
+ ALSCHD(1)= -16.0, -8.0, -6.0, -4.0, -2.0,
+              0.0, 2.0,  4.0,  8.0,  9.0,
+              10.0, 12.0, 14.0, 16.0, 18.0,
+              19.0, 20.0, 21.0, 22.0, 24.0,
+  STMACH=0.6, TSMACH=1.4, TR=1.0$
+ $OPTINS ROUGFC=0.40E-3$
+ $SYNTHS XCG=0.30, ZCG=0.0,
+  XW=0.25,  ZW=0.04,  ALIW=0.0,
+  XH=0.95,  ZH=0.02,   ALIH=0.0,
+  XV=0.95,  ZV=0.03,
+  SCALE=1.0, VERTUP=.TRUE.$
+ $BODY NX=20.0,
+       X(1)= 0.0, 0.05, 0.09, 0.13, 0.17,
+            0.21, 0.25, 0.29, 0.33, 0.37,
+            0.41, 0.45, 0.52, 0.59, 0.66,
+            0.73, 0.80, 0.87, 0.94, 1.00,
+       R(1)= 0.02,  0.025, 0.030, 0.035, 0.040,
+             0.045, 0.050, 0.050, 0.050, 0.050,
+             0.050, 0.050, 0.0475, 0.045, 0.040,
+             0.035, 0.030, 0.0275, 0.0225, 0.020,
+       ITYPE=1.0, METHOD=1.0$
+ $WGPLNF CHRDTP=.20, CHRDR=.20,  SSPN=.58,
+   SAVSI=0.0, SAVSO=0.0,
+          SSPNE=0.05, SSPNDD=0.0,
+   TWISTA=0.0,
+          DHDADI=0.0, DHDADO=0.0,
+   CHSTAT=0.0, TYPE=1.0$
+ $ASYFLP STYPE=4.0,
+         NDELTA=9.0,
+         DELTAL(1)=-28.0, -20.0, -10.0, -5.0, 0.0,  5.0,  10.0,  20.0,  28.0,
+         DELTAR(1)= 28.0,  20.0,  10.0,  5.0, 0.0, -5.0, -10.0, -20.0, -28.0,
+         SPANFI=0.20, SPANFO=0.50,
+         PHETE=0.0, CHRDFI=0.035, CHRDFO=0.035$
+NACA W 4 4415
+NACA H 4 0012
+NACA V 4 0012
+ $HTPLNF CHRDR=.13, CHRDTP=0.09,
+          SSPN=0.24, SSPNE=0.20,
+          SAVSI=0.0,
+          CHSTAT=1.0, TWISTA=0.0,
+          DHDADI=0.0,
+          TYPE=1.0$
+ $VTPLNF CHRDTP=0.06, CHRDR=0.13,
+         SSPN=0.22,
+         SAVSI=0.0,  CHSTAT=1.0,
+         DHDADI=0.0,
+         TYPE=1.0$
+ $SYMFLP
+  SPANFI=0.0, SPANFO=0.235,
+ CHRDFO= 0.035, CHRDFI=0.035,
+ NDELTA=9.0,
+ DELTA=-20.0,-15.0, -10.0, -5.0, 0.0, 5.0, 10.0, 15.0, 20.0,
+ FTYPE=1.0, NTYPE=1.0,
+ CB=0.01, TC=0.007,
+  PHETE=0.0, PHETEP=0.0$
+ $PROPWR AIETLP=-5.19,NENGSP=1.0,THSTCP=0.0,PHALOC=0.0,
+        PHVLOC=0.,PRPRAD=.08,
+        BWAPR3=0.10417,BWAPR6=0.10417,
+        BWAPR9=0.0625,NOPBPE=2.,BAPR75=45.,YP=0.,CROT=.FALSE.,$
+CASEID TOTAL: TOTAL: TOTAL: UAV William Sanchez Farfan

@@ -1,0 +1,114 @@
+UAV_v3
+0.0                          | Mach
+0     0     0.0              | iYsym  iZsym  Zsym
+
+260.004    0.2000   1.3000  | Sref   Cref   Bref
+52.806    -0.000    18.379          | Xref   Yref   Zref
+
+#=================================================
+SURFACE                      | (keyword)
+UAV_Wing
+#Nchord    Cspace   [ Nspan Sspace ]
+8        1.0
+YDUPLICATE
+0.0
+ANGLE
+0.000                         | dAinc
+
+
+#______________
+SECTION                                                     |  (keyword)
+ -0.0500000    0.0000   0.0450000  0.2000000   0.000    3    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFILE
+NACA4415.dat
+
+#______________
+SECTION                                                     |  (keyword)
+ -0.0500000  0.1500000   0.0450000  0.2000000   0.000    3    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFILE
+NACA4415.dat
+
+CONTROL                                                     |  (keyword)
+UAV_Aileron  1.0   0.800      0.0000      1.0000      0.0000  -1.0  | name, gain,  Xhinge,  XYZhvec,  SgnDup
+#______________
+SECTION                                                     |  (keyword)
+ -0.0500000  0.5500000   0.0450000  0.2000000   0.000    6    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFILE
+NACA4415.dat
+
+#______________
+SECTION                                                     |  (keyword)
+ -0.0500000  0.6500000   0.0450000  0.2000000   0.000    6    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFILE
+NACA4415.dat
+
+#=================================================
+SURFACE                      | (keyword)
+UAV_Elev
+#Nchord    Cspace   [ Nspan Sspace ]
+3        1.0
+
+YDUPLICATE
+0.0
+
+ANGLE
+   0.000                         | dAinc
+
+
+#______________
+SECTION                                                     |  (keyword)
+ 0.4500000    0.0000   0.0200000  0.1300000   0.000    4    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFILE
+NACA0012.dat
+
+CONTROL                                                     |  (keyword)
+UAV_Elevator  1.0   0.800      0.0333      0.9994      0.0000  1.0  | name, gain,  Xhinge,  XYZhvec,  SgnDup
+
+#______________
+SECTION                                                     |  (keyword)
+ 0.4900000    0.2400000   0.0200000  0.0900000   0.000    4    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFILE
+NACA0012.dat
+
+CONTROL                                                     |  (keyword)
+UAV_Elevator  1.0   0.800      0.0333      0.9994      0.0000  1.0  | name, gain,  Xhinge,  XYZhvec,  SgnDup
+
+
+#=================================================
+SURFACE                      | (keyword)
+UAV_Fin
+#Nchord    Cspace   [ Nspan Sspace ]
+3        1.0
+
+
+ANGLE
+   0.000                         | dAinc
+
+
+#______________
+SECTION                                                     |  (keyword)
+ 0.4500000   -0.0000  0.0200000   0.1300000   0.000    4    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFIL 0.0 1.0
+NACA0012.dat
+
+CONTROL                                                     |  (keyword)
+UAV_Rudder  1.0   0.800     -0.1055      0.0000     -0.9944  -1.0  | name, gain,  Xhinge,  XYZhvec,  SgnDup
+
+#______________
+SECTION                                                     |  (keyword)
+ 0.5200000   -0.0000  0.1520000   0.0600000   0.000    4    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFIL 0.0 1.0
+NACA0012.dat
+
+CONTROL                                                     |  (keyword)
+UAV_Rudder  1.0   0.800     -0.1055      0.0000     -0.9944  -1.0  | name, gain,  Xhinge,  XYZhvec,  SgnDup
+
+

@@ -1,0 +1,34 @@
+#-------------------------------------------------
+#
+#   UAV
+#
+#  Dimensional unit and parameter data.
+#  Mass & Inertia breakdown.
+#-------------------------------------------------
+#  Names and scalings for units to be used for trim and eigenmode calculations.
+#  The Lunit and Munit values scale the mass, xyz, and inertia table data below.
+#  Lunit value will also scale all lengths and areas in the AVL input file.
+#
+Lunit =     0.0010 m
+Munit =     1.0000 kg
+Tunit = 1.0 s
+#-------------------------
+#  Gravity and density to be used as default values in trim setup (saves runtime typing).
+#  Must be in the unit names given above (i.e. m,kg,s).
+g   = 9.81
+rho = 1.225
+#-------------------------
+#  Mass & Inertia breakdown.
+#  x y z  is location of item's own CG.
+#  Ixx... are item's inertias about item's own CG.
+#
+#  x,y,z system here must be exactly the same one used in the .avl input file
+#     (same orientation, same origin location, same length units)
+#
+#     mass          x          y          z        Ixx        Iyy        Izz        Ixy        Ixz        Iyz 
+       0.5       34.3   3.86e-14       51.3   7.59e+04    1.1e+03    7.7e+04          0      -2.75          0 ! UAV_Wing
+      0.25        515  -1.97e-15         20   3.95e+03        186   4.13e+03          0  -1.23e-28          0 ! UAV_Elev
+         0        520  -8.16e-14       70.5          0          0          0          0          0          0 ! UAV_Fin
+       0.3        110          0          0          0   1.29e+04   1.29e+04          0          0          0 ! Body's inertia
+       0.3       -250          0          0      0.000      0.000      0.000 ! 
+       0.4       -200          0          0      0.000      0.000      0.000 ! 

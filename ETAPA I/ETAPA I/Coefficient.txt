@@ -1,0 +1,70 @@
+ ---------------------------------------------------------------
+ Vortex Lattice Output -- Total Forces
+
+ Configuration: UAV_Flightgear                                              
+     # Surfaces =   5
+     # Strips   =  49
+     # Vortices = 511
+
+  Sref = 0.37500       Cref = 0.25000       Bref =  1.5000    
+  Xref = 0.72000E-01   Yref =  0.0000       Zref = 0.17000E-01
+
+ Standard axis orientation,  X fwd, Z down         
+
+ Run case: UAV_run                                 
+
+  Alpha =   0.00000     pb/2V =  -0.00000     p'b/2V =  -0.00000
+  Beta  =   0.00000     qc/2V =   0.00000
+  Mach  =     0.000     rb/2V =  -0.00000     r'b/2V =  -0.00000
+
+  CXtot =  -0.00503     Cltot =  -0.00000     Cl'tot =  -0.00000
+  CYtot =  -0.00000     Cmtot =  -0.04157
+  CZtot =  -0.30882     Cntot =   0.00000     Cn'tot =   0.00000
+
+  CLtot =   0.30882
+  CDtot =   0.00503
+  CDvis =   0.00000     CDind = 0.0050265
+  CLff  =   0.30880     CDff  = 0.0055047    | Trefftz
+  CYff  =  -0.00000         e =    0.9190    | Plane  
+
+   UAV_Flightgear_W=   0.00000
+   UAV_Flightgear_E=   0.00000
+   UAV_Flightgear_E=   0.00000
+   UAV_Flightgear_F=   0.00000
+   UAV_Flightgear_F=   0.00000
+
+ ---------------------------------------------------------------
+
+ Stability-axis derivatives...
+
+                             alpha                beta
+                  ----------------    ----------------
+ z' force CL |    CLa =   4.704483    CLb =   0.000000
+ y  force CY |    CYa =  -0.000000    CYb =  -0.062480
+ x' mom.  Cl'|    Cla =  -0.000001    Clb =  -0.038372
+ y  mom.  Cm |    Cma =  -0.289128    Cmb =  -0.000000
+ z' mom.  Cn'|    Cna =   0.000000    Cnb =   0.018932
+
+                     roll rate  p'      pitch rate  q'        yaw rate  r'
+                  ----------------    ----------------    ----------------
+ z' force CL |    CLp =   0.000000    CLq =   6.416104    CLr =  -0.000000
+ y  force CY |    CYp =   0.021272    CYq =  -0.000000    CYr =   0.048738
+ x' mom.  Cl'|    Clp =  -0.493160    Clq =  -0.000000    Clr =   0.093237
+ y  mom.  Cm |    Cmp =   0.000000    Cmq =  -4.499357    Cmr =   0.000000
+ z' mom.  Cn'|    Cnp =  -0.022678    Cnq =   0.000000    Cnr =  -0.016391
+
+                  UAV_Flightge d1     UAV_Flightge d2     UAV_Flightge d3     UAV_Flightge d4     UAV_Flightge d5 
+                  ----------------    ----------------    ----------------    ----------------    ----------------
+ z' force CL |   CLd1 =   0.000000   CLd2 =   0.000000   CLd3 =   0.000000   CLd4 =   0.000000   CLd5 =   0.000000
+ y  force CY |   CYd1 =   0.000000   CYd2 =   0.000000   CYd3 =   0.000000   CYd4 =   0.000000   CYd5 =   0.000000
+ x' mom.  Cl'|   Cld1 =  -0.000000   Cld2 =  -0.000000   Cld3 =  -0.000000   Cld4 =  -0.000000   Cld5 =  -0.000000
+ y  mom.  Cm |   Cmd1 =   0.000000   Cmd2 =   0.000000   Cmd3 =   0.000000   Cmd4 =   0.000000   Cmd5 =   0.000000
+ z' mom.  Cn'|   Cnd1 =  -0.000000   Cnd2 =  -0.000000   Cnd3 =  -0.000000   Cnd4 =  -0.000000   Cnd5 =  -0.000000
+ Trefftz drag| CDffd1 =   0.000000 CDffd2 =   0.000000 CDffd3 =   0.000000 CDffd4 =   0.000000 CDffd5 =   0.000000
+ span eff.   |    ed1 =   0.000000    ed2 =   0.000000    ed3 =   0.000000    ed4 =   0.000000    ed5 =   0.000000
+
+
+
+ Neutral point  Xnp =   0.087365
+
+ Clb Cnr / Clr Cnb  =   0.356312    (  > 1 if spirally stable )

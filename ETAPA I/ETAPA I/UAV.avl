@@ -1,0 +1,164 @@
+UAV
+0.0                          | Mach
+0     0     0.0              | iYsym  iZsym  Zsym
+
+270000.009    200.000   1350.000  | Sref   Cref   Bref
+# Note : check consistency of area unit above with length units of the file
+  13.556     0.000    17.501          | Xref   Yref   Zref
+ 0.00                        | CDp  (optional)
+
+
+
+#=================================================
+SURFACE                      | (keyword)
+UAV_Wing
+#Nchord    Cspace   [ Nspan Sspace ]
+8        1.0
+
+INDEX                        | (keyword)
+1804289383                          | Lsurf
+
+YDUPLICATE
+0.0
+
+SCALE
+1.0  1.0  1.0
+
+TRANSLATE
+0.0  0.0  0.0
+
+ANGLE
+   0.000                         | dAinc
+
+
+#______________
+SECTION                                                     |  (keyword)
+ -50.0000    0.0000   45.0000  200.0000   0.000    3    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFIL 0.0 1.0
+NACA4415.dat
+
+#______________
+SECTION                                                     |  (keyword)
+ -50.0000  168.7500   45.0000  200.0000   0.000    3    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFIL 0.0 1.0
+NACA4415.dat
+
+#______________
+SECTION                                                     |  (keyword)
+ -50.0000  337.5000   45.0000  200.0000   0.000    3    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFIL 0.0 1.0
+NACA4415.dat
+
+#______________
+SECTION                                                     |  (keyword)
+ -50.0000  506.2500   45.0000  200.0000   0.000    3    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFIL 0.0 1.0
+NACA4415.dat
+
+#______________
+SECTION                                                     |  (keyword)
+ -50.0000  675.0000   45.0000  200.0000   0.000    3    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFIL 0.0 1.0
+NACA4415.dat
+
+
+
+#=================================================
+SURFACE                      | (keyword)
+UAV_Elev
+#Nchord    Cspace   [ Nspan Sspace ]
+3        1.0
+
+INDEX                        | (keyword)
+1804289385                          | Lsurf
+
+YDUPLICATE
+0.0
+
+SCALE
+1.0  1.0  1.0
+
+TRANSLATE
+0.0  0.0  0.0
+
+ANGLE
+   0.000                         | dAinc
+
+
+#______________
+SECTION                                                     |  (keyword)
+ 450.0000    0.0000   20.0000  130.0000   0.000    1    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFIL 0.0 1.0
+NACA0012.dat
+
+#______________
+SECTION                                                     |  (keyword)
+ 460.0000   60.0000   20.0000  120.0000   0.000    1    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFIL 0.0 1.0
+NACA0012.dat
+
+#______________
+SECTION                                                     |  (keyword)
+ 470.0000  120.0000   20.0000  110.0000   0.000    1    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFIL 0.0 1.0
+NACA0012.dat
+
+#______________
+SECTION                                                     |  (keyword)
+ 480.0000  180.0000   20.0000  100.0000   0.000    1    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFIL 0.0 1.0
+NACA0012.dat
+
+#______________
+SECTION                                                     |  (keyword)
+ 490.0000  240.0000   20.0000   90.0000   0.000    1    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFIL 0.0 1.0
+NACA0012.dat
+
+
+
+#=================================================
+SURFACE                      | (keyword)
+UAV_Fin
+#Nchord    Cspace   [ Nspan Sspace ]
+3        1.0
+
+INDEX                        | (keyword)
+1804289386                          | Lsurf
+
+SCALE
+1.0  1.0  1.0
+
+TRANSLATE
+0.0  0.0  0.0
+
+ANGLE
+   0.000                         | dAinc
+
+
+#______________
+SECTION                                                     |  (keyword)
+ 520.0000   -0.0000  152.0000   60.0000   0.000    4    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFIL 0.0 1.0
+NACA0012.dat
+
+#______________
+SECTION                                                     |  (keyword)
+ 450.0000    0.0000   20.0000  130.0000   0.000    4    1   | Xle Yle Zle   Chord Ainc   [ Nspan Sspace ]
+
+AFIL 0.0 1.0
+NACA0012.dat
+
+
+

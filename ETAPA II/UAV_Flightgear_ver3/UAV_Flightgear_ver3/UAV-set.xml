@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<PropertyList>
+    <sim>
+        <author>William Sanchez</author>
+		<description>UAV Avion no Tripulado ver 3</description>
+        <aircraft-version>0.0.0</aircraft-version>
+        <status>early-production</status>
+        <startup>
+            <splash-title>UAV Sao Jose dos Campos</splash-title>
+	    <splash-texture>Aircraft/UAV_Flightgear_ver3/UAV_photo-splash.jpg</splash-texture>
+        </startup>
+        <model>
+            <path>Aircraft/UAV_Flightgear_ver3/Models/UAV-model.xml</path>
+        </model>
+  <sound>
+   <path>Aircraft/Generic/generic-sound.xml</path>
+  </sound>  
+		<flight-model>jsb</flight-model>
+        <aero>UAV</aero>
+    </sim>
+
+</PropertyList>

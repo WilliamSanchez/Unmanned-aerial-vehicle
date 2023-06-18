@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<PropertyList>
+
+	<!--Plane-->
+    <path>UAV_Blender_ver3a.ac</path>
+    <offsets>
+        <z-m>0.055</z-m>
+        <pitch-deg>-0.02</pitch-deg>
+    </offsets>
+
+	<!--Elevator-->
+    <animation>
+        <type>rotate</type>
+        <object-name>Elevador</object-name>
+        <property>/surface-positions/elevator-pos-norm</property>
+        <factor>22.5</factor>
+		<axis>
+            <y1-m>0.23466</y1-m>
+            <x1-m>0.585</x1-m>
+            <z1-m>0.0287</z1-m>
+	    <y2-m>-0.23466</y2-m> 
+	    <x2-m>0.585</x2-m>           
+            <z2-m>0.0284136</z2-m>
+		</axis>
+	</animation>
+
+	<!--Rudder-->
+    <animation>
+        <type>rotate</type>
+        <object-name>Timon</object-name>
+        <property>/surface-positions/rudder-pos-norm</property>
+        <factor>25</factor>
+		 <axis>
+            <y1-m>0.000</y1-m>
+            <x1-m>0.585</x1-m>
+            <z1-m>0.155</z1-m>
+            <y2-m>0.000</y2-m>
+            <x2-m>0.585</x2-m>
+            <z2-m>0.031</z2-m>
+        </axis>
+    </animation>
+
+
+	<!-- Aileron Right -->
+    <animation>
+        <type>rotate</type>
+        <object-name>Aileron_Right</object-name>
+        <property>/surface-positions/right-aileron-pos-norm</property>
+        <factor>25</factor>
+		 <axis>
+            <y1-m>-0.55</y1-m>
+            <x1-m>0.115</x1-m>
+            <z1-m>0.05</z1-m>
+            <y2-m>-0.15</y2-m>
+            <x2-m>0.115</x2-m>
+            <z2-m>0.05</z2-m>
+        </axis>
+    </animation>
+
+	<!-- Aileron Left -->
+    <animation>
+        <type>rotate</type>
+        <object-name>Aileron_Left</object-name>
+        <property>/surface-positions/left-aileron-pos-norm</property>
+        <factor>25</factor>
+		 <axis>
+            <y1-m>0.55</y1-m>
+            <x1-m>0.115</x1-m>
+            <z1-m>0.05</z1-m>
+            <y2-m>0.15</y2-m>
+            <x2-m>0.115</x2-m>
+            <z2-m>0.05</z2-m>
+        </axis>
+    </animation>
+
+
+    <!-- Propeller -->
+ <animation>
+  <type>spin</type>
+  <object-name>Helice</object-name>
+  <property>engines/engine/rpm</property>
+  <factor>-0.2</factor>   
+  <center>
+   <x-m>-29.7</x-m>
+   <y-m>0</y-m>
+   <z-m>0</z-m>
+  </center>
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+</PropertyList>
