@@ -15,5 +15,5 @@ comunication_system: comunication_system.o
 .PHONY: clean
 
 clean:
-	rm -f *.o shm2 shm1 mmap *~
+	rm -f *.o comunication_system *~
 
