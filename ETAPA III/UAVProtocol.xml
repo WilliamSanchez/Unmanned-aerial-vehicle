@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <generic>
+
+    <output>
+      <line_separator>newline</line_separator>
+      <var_separator>newline</var_separator>
+      <binary_mode>false</binary_mode>
+
+      <chunk>
+        <name>speed</name>
+        <format>V=%d</format>
+        <node>/velocities/airspeed-kt</node>
+      </chunk>
+
+      <chunk>
+        <name>heading (rad)</name>
+        <format>H=%.6f</format>
+        <type>float</type>
+        <node>/orientation/heading-deg</node>
+        <factor>0.0174532925199433</factor>  <!-- degrees to radians -->
+      </chunk>
+
+      <chunk>
+        <name>pitch angle (deg)</name>
+        <format>P=%03.2f</format>
+        <node>/orientation/pitch-deg</node>
+      </chunk>
+   </output>
+
+ </generic>
+</PropertyList>
