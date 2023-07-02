@@ -4,29 +4,90 @@
   <generic>
 
     <output>
+    
       <line_separator>newline</line_separator>
       <var_separator>newline</var_separator>
-      <binary_mode>false</binary_mode>
-
+      
+       <!-- ##### GPS ##### -->
       <chunk>
-        <name>speed</name>
-        <format>V=%d</format>
-        <node>/velocities/airspeed-kt</node>
+	<name>latitude</name>
+	<type>double</type>
+	<node>/position/latitude-deg</node>
+	<format>%03.6f</format>
+      </chunk> 
+     
+      <chunk>
+	<name>longitude</name>
+	<type>double</type>
+	<node>/position/longitude-deg</node>
+	<format>%03.6f</format>
+      </chunk> 
+    
+      <chunk>
+	<name>altitude</name>
+	<type>double</type>
+	<node>/position/altitude-ft</node>
+	<format>%05.5f</format> 
+      </chunk> 
+ 
+         <!-- ##### AIR SPEED ##### -->
+     
+      <chunk>
+	<name>airspeed</name>
+	<type>double</type>
+	<node>/velocities/airspeed-kt</node>
+	<format>%03.5f</format>
+      </chunk> 
+ 
+        <!-- ##### HEADING ##### -->
+
+      <chunk> 
+	<name>heading</name>
+	<type>double</type>
+	<node>/orientation/heading-magnetic-deg</node>
+	<format>%03.5f</format>
+      </chunk>
+
+      <!-- ##### IMU ##### -->
+     
+      <chunk>
+	<name>x-accel</name>
+	<type>double</type>
+	<node>/accelerations/pilot/x-accel-fps_sec</node>
+	<format>%03.5f</format>
+      </chunk>
+      <chunk>
+	<name>y-accel</name>
+	<type>double</type>
+	<node>/accelerations/pilot/y-accel-fps_sec</node>
+	<format>%03.5f</format>
+      </chunk>
+      <chunk>
+	<name>z-accel</name>
+	<type>double</type>
+	<node>/accelerations/pilot/z-accel-fps_sec</node>
+	<format>%03.5f</format>
       </chunk>
 
       <chunk>
-        <name>heading (rad)</name>
-        <format>H=%.6f</format>
-        <type>float</type>
-        <node>/orientation/heading-deg</node>
-        <factor>0.0174532925199433</factor>  <!-- degrees to radians -->
-      </chunk>
-
+	<name>roll-rate</name>
+	<type>double</type>
+	<node>/orientation/roll-rate-degps</node>
+	<format>%03.5f</format>
+      </chunk> 
       <chunk>
-        <name>pitch angle (deg)</name>
-        <format>P=%03.2f</format>
-        <node>/orientation/pitch-deg</node>
-      </chunk>
+	<name>pitch-rate</name>
+	<type>double</type>
+	<node>/orientation/pitch-rate-degps</node>
+	<format>%03.5f</format>
+      </chunk> 
+      <chunk>
+	<name>yaw-rate</name>
+	<type>double</type>
+	<node>/orientation/yaw-rate-degps</node>
+	<format>%03.5f</format>
+      </chunk> 
+   
    </output>
 
  </generic>

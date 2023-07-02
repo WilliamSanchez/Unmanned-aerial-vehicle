@@ -82,8 +82,9 @@ int main(){
     
     // print where it got the UDP data from and the raw data
     printf("\n(%s,%d)said:",inet_ntoa(client_addr_in.sin_addr),ntohs(client_addr_in.sin_port));
-//    printf("%s",recv_data);
+    printf("DATA: %s/n/r",recv_data);
 
+/*
     //parse UDP data and store into float array
     sscanf(recv_data,"%f%f%f%f%f%f%f%f%f",
 	&fdmData[ROLL],&fdmData[PITCH],&fdmData[HEADING],
@@ -95,7 +96,7 @@ int main(){
 	fdmData[ROLL],fdmData[PITCH],fdmData[HEADING],
 	fdmData[ROLL_RATE],fdmData[PITCH_RATE],fdmData[YAW_RATE],
 	fdmData[X_ACCEL],fdmData[Y_ACCEL],fdmData[Z_ACCEL]);
- 
+ */
 
    }
    return 0;

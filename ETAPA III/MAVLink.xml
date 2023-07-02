@@ -1,9 +1,49 @@
 <?xml version="1.0"?>
+
 <PropertyList>
-<generic>
-  <output>
-  
-        <!-- ##### GPS ##### -->
+
+  <generic>
+
+    <!-- template
+	 <chunk>
+	   <name></name>
+	   <type>double</type>
+	   <node></node>
+	 </chunk> 
+	 -->
+
+    <input>
+      <binary_mode>true</binary_mode>
+
+      <!-- ##### Flight Controls -->
+      <chunk>
+	<name>aileron</name>
+	<type>double</type>
+	<node>/controls/flight/aileron</node>
+      </chunk> 
+      <chunk>
+	<name>elevator</name>
+	<type>double</type>
+	<node>/controls/flight/elevator</node>
+      </chunk> 
+      <chunk>
+	<name>rudder</name>
+	<type>double</type>
+	<node>/controls/flight/rudder</node>
+      </chunk> 
+      <chunk>
+	<name>throttle</name>
+	<type>double</type>
+	<node>/controls/engines/engine[0]/throttle</node>
+      </chunk> 
+
+    </input>
+
+    <output>
+      <binary_mode>true</binary_mode>
+      <binary_footer>magic,0x4c56414d</binary_footer>
+
+      <!-- ##### GPS ##### -->
       <chunk>
 	<name>latitude</name>
 	<type>double</type>
@@ -18,8 +58,26 @@
 	<name>altitude</name>
 	<type>double</type>
 	<node>/position/altitude-ft</node>
+      </chunk> 
+      <chunk>
+	<name>heading</name>
+	<type>double</type>
+	<node>/orientation/heading-deg</node>
       </chunk>
-  
+
+      <!-- ground course = atan(ve/vn), speed = sqrt((ve*ve) + (vn*vn)) -->
+      <chunk>
+	<name>speed - north</name>
+	<type>double</type>
+	<node>/velocities/speed-north-fps</node>
+      </chunk> 
+      <chunk>
+	<name>speed - east</name>
+	<type>double</type>
+	<node>/velocities/speed-east-fps</node>
+      </chunk> 
+      
+
       <!-- ##### IMU ##### -->
       <chunk>
 	<name>x-accel</name>
@@ -52,7 +110,10 @@
 	<type>double</type>
 	<node>/orientation/yaw-rate-degps</node>
       </chunk> 
+
       
-  </output>
-</generic>
+    </output>
+
+  </generic>
+
 </PropertyList>
