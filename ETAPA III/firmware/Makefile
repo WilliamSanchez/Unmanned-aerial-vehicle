@@ -1,29 +1,30 @@
-CC = gcc
-CFLAGS= -I. -lpthread
-OBJ = comunication_system.o
+INCLUDE_DIRS = 
+LIB_DIRS = 
+CC=gcc
 
-#	$@	--> Name of the current target
-#	$< 	--> Name of the current prerequisite
-#	$* 	--> Name of the current prerequisite without any sufex 
+CDEFS=
+CFLAGS= -O0 -g $(INCLUDE_DIRS) $(CDEFS)
+LIBS= 
 
-%.o: %.c
-	$(CC) -c -o $@ $< $(CFLAGS)
+HFILES= 
+CFILES= lab1.c
 
-# pthread.o: pthread.c
-#	gcc -c -o pthread.o pthread.c
+SRCS= ${HFILES} ${CFILES}
+OBJS= ${CFILES:.c=.o}
 
-all: comunication_system
-	
-comunication_system: $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS)
-
-#pthread: pthread.o 
-#     gcc -o pthread pthread.o
-
-.PHONY: clean
+all:	main
 
 clean:
-	rm -f *.o comunication_system *~
+	-rm -f *.o *.d
+	-rm -f main
+
+lab1: main.o
+	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $@.o -lpthread
+
+depend:
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
 	
 	
 	
