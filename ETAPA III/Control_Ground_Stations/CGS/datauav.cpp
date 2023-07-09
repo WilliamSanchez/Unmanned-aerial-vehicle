@@ -7,6 +7,7 @@ dataUAV::dataUAV(QObject *parent)
 
      /*Create a QUDP socket*/
       _socket = new QUdpSocket(this);
+ //   _socket->bind(QHostAddress::LocalHost,5500);
       _socket->bind(QHostAddress::LocalHost,5500);
 
       connect(_socket,SIGNAL(readyRead()),this,SLOT(readData()));

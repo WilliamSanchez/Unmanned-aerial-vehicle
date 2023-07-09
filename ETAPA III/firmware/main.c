@@ -9,11 +9,31 @@
 #include <time.h>
 #include <semaphore.h>
 
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <errno.h>
+#include <string.h>
+
 #define NUM_THREADS (3)
 #define USER_PER_MSEC (1000)
 
+#define LATITUDE		0
+#define LONGITUDE		1
+#define ALTITUDE		2
+#define AIRSPEED		3
+#define HEADING			4
+#define X_ACCEL			6
+#define Y_ACCEL			7
+#define Z_ACCEL			8
+#define PITCH_RATE		9
+#define ROLL_RATE		10
+#define YAW_RATE		11
+
 int abortTest = 0;
 double start_time;
+double get_time_NAV;
 
 sem_t semCTL, semNAV;
 
@@ -24,15 +44,123 @@ typedef struct{
 
 
 double getTimeMsec();
+char rcv_data[1024];
+int sock_in, sock_out;
+float fdmData[100];
+int addr_len, bytes_read;
+int send_len;
+   
+struct sockaddr_in server_addr_in, client_addr_in;
+struct sockaddr_in server_addr_out, client_addr_out;
+struct hostent *host_out;
 
+/*********************************************
+*********************************************/
 
+void init_sendData()
+{
+   
+//   host_out = (struct hostnet*)gethostname((char*)"127.0.0.1");   
+   if((sock_out = socket(AF_INET,SOCK_DGRAM,0)) < 0)
+   {
+       perror("socket");
+       exit(1);
+   }
+   
+   server_addr_out.sin_family = AF_INET;
+   server_addr_out.sin_port = htons(4545);
+//   server_addr_out.sin_addr.s_addr = *((struct in_addr*)host_out->h_addr);INADDR_ANY
+   server_addr_out.sin_addr.s_addr = INADDR_ANY;
+   bzero(&(server_addr_out.sin_zero),8);
+   
+   if(bind(sock_out,(struct sockaddr *)&server_addr_out, sizeof(struct sockaddr)) == -1)
+   {
+   	perror("Bind");
+   	exit(1);
+   }
+   
+   printf("\nSend data in the port 4545");
+   
+   fflush(stdout);
+   
+   sendto(sock_out,rcv_data,1024,0,(struct sockaddr*)&client_addr_out,send_len);
+   //bytes_read = recvfrom(sock_in,rcv_data,1024,0,(struct sockaddr*)&client_addr_in,&addr_len);
+   //rcv_data[bytes_read] = '\0';
+   
+       // print where it got the UDP data from and the raw data
+    //printf("\n(%s,%d)said:",inet_ntoa(client_addr_in.sin_addr),ntohs(client_addr_in.sin_port));
+    //printf("DATA: \n\r%s/n/r",rcv_data);
+}
+
+/*********************************************
+*********************************************/
+
+/*********************************************
+*********************************************/
+
+void init_getData()
+{
+   
+   if((sock_in = socket(AF_INET,SOCK_DGRAM,0)) < 0)
+   {
+       perror("socket");
+       exit(1);
+   }
+   
+   server_addr_in.sin_family = AF_INET;
+   server_addr_in.sin_port = htons(5500);
+   server_addr_in.sin_addr.s_addr = INADDR_ANY;
+   bzero(&(server_addr_in.sin_zero),8);
+   
+   if(bind(sock_in,(struct sockaddr *)&server_addr_in, sizeof(struct sockaddr)) == -1)
+   {
+   	perror("Bind");
+   	exit(1);
+   }
+   
+   addr_len = sizeof(struct sockaddr);
+   printf("\nUDPserver waiting for clietn to port 5500");
+   
+   fflush(stdout);
+   
+   bytes_read = recvfrom(sock_in,rcv_data,1024,0,(struct sockaddr*)&client_addr_in,&addr_len);
+   rcv_data[bytes_read] = '\0';
+   
+       // print where it got the UDP data from and the raw data
+    printf("\n(%s,%d)said:",inet_ntoa(client_addr_in.sin_addr),ntohs(client_addr_in.sin_port));
+    printf("DATA: \n\r%s/n/r",rcv_data);
+}
+
+/*********************************************
+*********************************************/
 /*
+	GPS	
+1-> latitude
+2-> longitude
+3-> altitude
+	
+	SPEED
+4-> air speed
+
+	HEADING
+5-> heading
+ 
+	IMU
+6-> x accel
+7-> y accel
+8-> z accel
+9-> roll rate
+10-> pitch rate
+11> yag rate
+	
+*/
+
 void *funcNAV(void *threadp)
 {
     double event_time, run_time=0.0;
     int limit=0, release=0, cpucore, i;
-    threadparams_t *threadParams=(threadParams_t*)threadp;
-    unsigned int requred_test_cycles;
+    threadParams_t *threadParams=(threadParams_t*)threadp;
+    unsigned int requred_test_cycles = 200;
     
     while(!abortTest)
     {
@@ -43,15 +171,78 @@ void *funcNAV(void *threadp)
        else
        	release++;
        	
+       	cpucore = sched_getcpu();get_time_NAV = getTimeMsec();
+       	printf("funcNAV start %d @ %lf on core %d\n",release,(event_time=getTimeMsec()-start_time),limit);
+       	
+       	
        	do
        	{
-       	    for(int x=0; i)
-       	}
-     
-    
+              bytes_read = recvfrom(sock_in,rcv_data,1024,0,(struct sockaddr*)&client_addr_in,&addr_len);
+              rcv_data[bytes_read] = '\0';
+   
+              // print where it got the UDP data from and the raw data
+              printf("\n(%s,%d)said:",inet_ntoa(client_addr_in.sin_addr),ntohs(client_addr_in.sin_port));
+//              printf("DATA: %s/n/r",rcv_data);
+
+    //parse UDP data and store into float array
+    sscanf(rcv_data,"%f%f%f%f%f%f%f%f%f%f%f",
+	&fdmData[LATITUDE],&fdmData[LONGITUDE],&fdmData[ALTITUDE],
+	&fdmData[AIRSPEED],&fdmData[HEADING],
+	&fdmData[X_ACCEL],&fdmData[Y_ACCEL],&fdmData[Z_ACCEL],
+	&fdmData[ROLL_RATE],&fdmData[PITCH_RATE],&fdmData[YAW_RATE]);
+
+    //print data to screen for monitoring purpose
+    printf("\nSensor Data\nLAT %f\nLON %f\nALT %f\nAIRSPEED %f\nHEAD %f\nX_accl%f\nY_accel%f\nZ_accel%f\nP_rate%f\nR_rate%f\nY_rate%f\n",
+	fdmData[LATITUDE],fdmData[LONGITUDE],fdmData[ALTITUDE],
+	fdmData[AIRSPEED],fdmData[HEADING],
+	fdmData[X_ACCEL],fdmData[Y_ACCEL],fdmData[Z_ACCEL],
+	fdmData[ROLL_RATE],fdmData[PITCH_RATE],fdmData[YAW_RATE]);
+
+
+       	}while(limit != 0);
+       	
+        printf("funcNAV complete %d delta time: %lf, %d loops\n",release,(event_time=getTimeMsec()-get_time_NAV),limit);
+        limit=0;    
     }
+    
+    pthread_exit((void*)0);
 }
-*/
+
+
+/*********************************************
+*********************************************/
+
+void *funcCTL(void *threadp)
+{
+    double event_time, run_time=0.0;
+    int limit=0, release=0, cpucore, i;
+    threadParams_t *threadParams=(threadParams_t*)threadp;
+    unsigned int requred_test_cycles = 100;
+    
+    while(!abortTest)
+    {
+       sem_wait(&semCTL);
+       
+       if(abortTest)
+         break;
+       else
+       	release++;
+       	
+       	cpucore = sched_getcpu();
+       	printf("funcCTL start %d @ %lf on core %d\n",release,(event_time=getTimeMsec()-start_time),limit);
+       	
+       	do
+       	{
+              sendto(sock_out,rcv_data,1024,0,(struct sockaddr*)&client_addr_out,send_len);
+       	}while(limit != 0);
+       	
+        printf("funcCTL complete %d @ %lf, %d loops\n",release,(event_time=getTimeMsec()-start_time),limit);
+        limit=0;    
+    }
+    
+    pthread_exit((void*)0);
+}
+
 
 /*********************************************
 *********************************************/
@@ -90,7 +281,8 @@ void *sequencer(void *threadp)
       usleep(20*USER_PER_MSEC);
       MajorPeriodCnt ++;
       
-  }while(MajorPeriodCnt < threadParams->majorPeriods);
+  }while(1);
+  //while(MajorPeriodCnt < threadParams->majorPeriods);
   
   abortTest = 1;
   sem_post(&semNAV);sem_post(&semCTL);
@@ -203,6 +395,10 @@ int main()
   }
   
   printf("Service threads will run on %d CPU cores\n",CPU_COUNT(&threadcpu));
+    
+  init_getData();
+
+  init_sendData();
 
   printf("\n\n---------------------------------\n");
   printf("\t\t\t\t\nINIT CONTOL SYSTEm uav\n");
@@ -211,18 +407,24 @@ int main()
   usleep(300000);
   printf("INIT .... \n\n");
   
-  threadParams[0].majorPeriods=300;
+//  threadParams[0].majorPeriods=300;
+threadParams[0].majorPeriods=0;
+  
+  rc = pthread_create(&threads[1],&rt_sched_attr[1]/*(void*)0*/,funcCTL,(void*)&(threadParams[1]));
+  rc = pthread_create(&threads[2],&rt_sched_attr[2]/*(void*)0*/,funcNAV,(void*)&(threadParams[2]));
+  
+  usleep(300000);  
   
   rc = pthread_create(&threads[0],&rt_sched_attr[0]/*(void*)0*/,sequencer,(void*)&(threadParams[0]));
+  
+//  pthread_join(threads[0],NULL);
+//  pthread_join(threads[2],NULL);
 
-
- pthread_join(threads[0],NULL);
-/*
   for(i=0; i<NUM_THREADS;i++)
   {
      pthread_join(threads[i],NULL);
   }
-*/  
+  
   printf("\nEND .... \n\n");
   return 0;
 }
