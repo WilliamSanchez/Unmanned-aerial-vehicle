@@ -9,7 +9,7 @@
 #include <netdb.h>
 
 #define BUF_SIZE 10
-#define PORT_NUM 5500 //4545
+#define PORT_NUM 4500
 
  char buf[BUF_SIZE] = "Hola\n";
  
@@ -32,14 +32,10 @@ int main()
    svaddr.sin_port = htons(PORT_NUM);
 
    
-   if(bind(sfd,(struct sockaddr *)&svaddr,sizeof(struct sockaddr_in)) == -1)
+   if(bind(sfd,(struct sockaddr *)&svaddr,sizeof(struct sockaddr)) == -1)
    {
       perror("Bind");
    }
-
-
-
-   while(accept(sfd,NULL,NULL) < 0);
 
    numBytes = strlen(buf);
    

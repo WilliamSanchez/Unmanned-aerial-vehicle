@@ -31,6 +31,11 @@
 #define ROLL_RATE		10
 #define YAW_RATE		11
 
+#define BUF_SIZE 10
+#define PORT_NUM 4500
+
+ char buf[BUF_SIZE] = "Hola\n";
+ 
 int abortTest = 0;
 double start_time;
 double get_time_NAV;
@@ -45,6 +50,7 @@ typedef struct{
 
 double getTimeMsec();
 char rcv_data[1024];
+char txr_data[1024];
 int sock_in, sock_out;
 float fdmData[100];
 int addr_len, bytes_read;
@@ -54,42 +60,50 @@ struct sockaddr_in server_addr_in, client_addr_in;
 struct sockaddr_in server_addr_out, client_addr_out;
 struct hostent *host_out;
 
+int numBytes_out;
+
 /*********************************************
 *********************************************/
 
 void init_sendData()
 {
    
+
+   
 //   host_out = (struct hostnet*)gethostname((char*)"127.0.0.1");   
-   if((sock_out = socket(AF_INET,SOCK_DGRAM,0)) < 0)
+   if((sock_out = socket(AF_INET,SOCK_DGRAM,0)) == -1)
    {
        perror("socket");
        exit(1);
    }
    
+   memset(&server_addr_out, 0, sizeof(struct sockaddr_in));
    server_addr_out.sin_family = AF_INET;
-   server_addr_out.sin_port = htons(4545);
-//   server_addr_out.sin_addr.s_addr = *((struct in_addr*)host_out->h_addr);INADDR_ANY
+   server_addr_out.sin_port = htons(PORT_NUM);
    server_addr_out.sin_addr.s_addr = INADDR_ANY;
-   bzero(&(server_addr_out.sin_zero),8);
+//   bzero(&(server_addr_out.sin_zero),8);
    
-   if(bind(sock_out,(struct sockaddr *)&server_addr_out, sizeof(struct sockaddr)) == -1)
+   if(bind(sock_out,(struct sockaddr *)&server_addr_out, sizeof(struct sockaddr_in)) == -1)
    {
    	perror("Bind");
-   	exit(1);
+   	//exit(1);
    }
    
-   printf("\nSend data in the port 4545");
+   printf("\nSend data in the port 4545\n");
    
-   fflush(stdout);
+//   fflush(stdout);
+   numBytes_out = strlen(buf);
    
-   sendto(sock_out,rcv_data,1024,0,(struct sockaddr*)&client_addr_out,send_len);
-   //bytes_read = recvfrom(sock_in,rcv_data,1024,0,(struct sockaddr*)&client_addr_in,&addr_len);
-   //rcv_data[bytes_read] = '\0';
+//while(1){
    
-       // print where it got the UDP data from and the raw data
-    //printf("\n(%s,%d)said:",inet_ntoa(client_addr_in.sin_addr),ntohs(client_addr_in.sin_port));
-    //printf("DATA: \n\r%s/n/r",rcv_data);
+   if(sendto(sock_out,buf,strlen(buf),0,(struct sockaddr*)&server_addr_out,sizeof(struct sockaddr_in))!=numBytes_out)
+   {
+       perror("sendto");
+   }else{
+       printf("Send data Success\n");
+   }
+   //usleep(3000000);
+//}
 }
 
 /*********************************************
@@ -129,6 +143,19 @@ void init_getData()
        // print where it got the UDP data from and the raw data
     printf("\n(%s,%d)said:",inet_ntoa(client_addr_in.sin_addr),ntohs(client_addr_in.sin_port));
     printf("DATA: \n\r%s/n/r",rcv_data);
+    
+        sscanf(rcv_data,"%f%f%f%f%f%f%f%f%f%f%f",
+	&fdmData[LATITUDE],&fdmData[LONGITUDE],&fdmData[ALTITUDE],
+	&fdmData[AIRSPEED],&fdmData[HEADING],
+	&fdmData[X_ACCEL],&fdmData[Y_ACCEL],&fdmData[Z_ACCEL],
+	&fdmData[ROLL_RATE],&fdmData[PITCH_RATE],&fdmData[YAW_RATE]);
+
+    //print data to screen for monitoring purpose
+    sprintf(txr_data,"\nSensor Data\nLAT %f\nLON %f\nALT %f\nAIRSPEED %f\nHEAD %f\nX_accl%f\nY_accel%f\nZ_accel%f\nP_rate%f\nR_rate%f\nY_rate%f\n",
+	fdmData[LATITUDE],fdmData[LONGITUDE],fdmData[ALTITUDE],
+	fdmData[AIRSPEED],fdmData[HEADING],
+	fdmData[X_ACCEL],fdmData[Y_ACCEL],fdmData[Z_ACCEL],
+	fdmData[ROLL_RATE],fdmData[PITCH_RATE],fdmData[YAW_RATE]);
 }
 
 /*********************************************
@@ -192,7 +219,7 @@ void *funcNAV(void *threadp)
 	&fdmData[ROLL_RATE],&fdmData[PITCH_RATE],&fdmData[YAW_RATE]);
 
     //print data to screen for monitoring purpose
-    printf("\nSensor Data\nLAT %f\nLON %f\nALT %f\nAIRSPEED %f\nHEAD %f\nX_accl%f\nY_accel%f\nZ_accel%f\nP_rate%f\nR_rate%f\nY_rate%f\n",
+    sprintf(txr_data,"\nSensor Data\nLAT %f\nLON %f\nALT %f\nAIRSPEED %f\nHEAD %f\nX_accl%f\nY_accel%f\nZ_accel%f\nP_rate%f\nR_rate%f\nY_rate%f\n",
 	fdmData[LATITUDE],fdmData[LONGITUDE],fdmData[ALTITUDE],
 	fdmData[AIRSPEED],fdmData[HEADING],
 	fdmData[X_ACCEL],fdmData[Y_ACCEL],fdmData[Z_ACCEL],
@@ -219,6 +246,9 @@ void *funcCTL(void *threadp)
     threadParams_t *threadParams=(threadParams_t*)threadp;
     unsigned int requred_test_cycles = 100;
     
+//    char buf[10] = "Hola\n";
+      numBytes_out = strlen(buf); 
+    
     while(!abortTest)
     {
        sem_wait(&semCTL);
@@ -233,7 +263,12 @@ void *funcCTL(void *threadp)
        	
        	do
        	{
-              sendto(sock_out,rcv_data,1024,0,(struct sockaddr*)&client_addr_out,send_len);
+               if(sendto(sock_out,txr_data,strlen(txr_data),0,(struct sockaddr*)&server_addr_out,sizeof(struct sockaddr_in))!=numBytes_out)
+               {
+                  perror("sendto");
+               }else{
+                  printf("Send data Success\n");
+               }
        	}while(limit != 0);
        	
         printf("funcCTL complete %d @ %lf, %d loops\n",release,(event_time=getTimeMsec()-start_time),limit);
@@ -397,7 +432,7 @@ int main()
   printf("Service threads will run on %d CPU cores\n",CPU_COUNT(&threadcpu));
     
   init_getData();
-
+  usleep(300000); 
   init_sendData();
 
   printf("\n\n---------------------------------\n");
