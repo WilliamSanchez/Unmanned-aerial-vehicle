@@ -9,8 +9,8 @@
 #include <unistd.h>
 
 
-#define BUF_SIZE 10
-#define PORT_NUM 5002
+#define BUF_SIZE 100
+#define PORT_NUM 5500
 
 char send_Data[32] = "Hola\n";
 
@@ -31,8 +31,22 @@ int main(int argc, char *argv[])
    
    memset(&svaddr, 0, sizeof(struct sockaddr_in));
    svaddr.sin_family = AF_INET;
-   svaddr.sin_addr.s_addr = INADDR_ANY;
+   svaddr.sin_addr.s_addr = INADDR_ANY; //inet_addr("127.0.0.1"); 
    svaddr.sin_port = htons(PORT_NUM);
+      
+   if(bind(sfd,(struct sockaddr *)&svaddr,sizeof(struct sockaddr)) == -1)
+   {
+      perror("Bind");
+   }
+   
+   int sock_len = sizeof(struct sockaddr_in);
+   numBytes = recvfrom(sfd,resp,sizeof(resp),0,(struct sockaddr*)&svaddr, &sock_len);
+   if(numBytes == -1)
+   {
+        perror("recvfrom");
+   }
+       
+       printf("Response: %.*s\n", (int)numBytes, resp);
    
    for(;;)
    {
@@ -42,7 +56,7 @@ int main(int argc, char *argv[])
          perror("sendto");
        }
        
-       numBytes = recvfrom(sfd,resp,BUF_SIZE,0,NULL,NULL);
+       numBytes = recvfrom(sfd,resp,sizeof(resp),0,(struct sockaddr*)&svaddr, &sock_len);
        if(numBytes == -1)
        {
           perror("recvfrom");

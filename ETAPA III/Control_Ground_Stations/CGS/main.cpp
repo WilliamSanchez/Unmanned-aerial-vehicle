@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+#include "QQmlContext"
 #include "datauav.h"
 
 int main(int argc, char *argv[])
@@ -10,7 +11,8 @@ int main(int argc, char *argv[])
 #endif
     QGuiApplication app(argc, argv);
 
-    dataUAV _myUAV;
+    //dataUAV _myUAV;
+    qmlRegisterType<dataUAV>("DQdata",1,0,"DataUAV");
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
@@ -20,6 +22,9 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
+
+    //QQmlContext *rootContext = engine.rootContext();
+    //rootContext->setContextProperty("dqData", &_myUAV);
 
     return app.exec();
 }

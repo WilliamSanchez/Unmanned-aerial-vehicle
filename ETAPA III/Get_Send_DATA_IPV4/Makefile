@@ -12,7 +12,7 @@ CFILES= send_data.c get_data.c
 SRCS= ${HFILES} ${CFILES}
 OBJS= ${CFILES:.c=.o}
 
-all:	send_data 
+all:	send_data get_data
 
 
 clean:
