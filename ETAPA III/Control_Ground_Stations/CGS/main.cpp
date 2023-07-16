@@ -11,7 +11,6 @@ int main(int argc, char *argv[])
 #endif
     QGuiApplication app(argc, argv);
 
-    //dataUAV _myUAV;
     qmlRegisterType<dataUAV>("DQdata",1,0,"DataUAV");
 
     QQmlApplicationEngine engine;
@@ -22,9 +21,6 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
-
-    //QQmlContext *rootContext = engine.rootContext();
-    //rootContext->setContextProperty("dqData", &_myUAV);
 
     return app.exec();
 }

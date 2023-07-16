@@ -1,8 +1,8 @@
 import QtQuick 2.0
 import QtQuick.Window 2.14
-import QtQuick.Controls 2.12
-import QtLocation 5.6
-import QtPositioning 5.6
+import "ui/OrientationBar"
+import "ui/ControlScreen"
+import "ui/MapScreen"
 import DQdata 1.0
 
 Window {
@@ -11,51 +11,21 @@ Window {
     visible: true
     title: qsTr("Ground Control Statations")
 
-
-    Plugin{
-      id: mapPlugin
-      name:"osm" //"mapboxgl" "esri"
-    }
-
-    Map{
-
-       anchors.fill: parent
-       plugin: mapPlugin
-       center: QtPositioning.coordinate(49.2827,-123.1207)
-       zoomLevel: 14
-    }
-
     DataUAV{
         id: uav
     }
 
-    Connections{
-        target: uav
-        onSomeVarChanged: myLabel.text = uav.getSomeVar()
+    ControlScreen{
+        id: controlScreen
     }
 
-    Button{
-        id: sendData
-        text: 'SendData'
-        visible: true
-        onClicked: uav.sendData()
+    Orientation{
+        id: orientationBar
     }
 
-    Button{
-        id: getData
-        anchors.centerIn: parent
-        text: 'GetData'
-        visible: true
-        onClicked: uav.setSomeVar("ABC")
+    MapScreen{
+        id: mapScreen
     }
 
-    Text {
-        id: myLabel
-        text: uav.getSomeVar()
-        anchors{
-            top:parent.top
-            horizontalCenter: parent.horizontalCenter
-            topMargin: 20
-        }
-    }
 }
+

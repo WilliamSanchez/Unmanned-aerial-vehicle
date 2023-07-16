@@ -16,6 +16,8 @@
 #include <errno.h>
 #include <string.h>
 
+#include "dqData.h"
+
 #define NUM_THREADS (3)
 #define USER_PER_MSEC (1000)
 
@@ -33,6 +35,8 @@
 
 #define BUF_SIZE 10
 #define PORT_NUM 4500
+
+struct dqData _getData;
 
  char buf[BUF_SIZE] = "Hola\n";
  
@@ -57,7 +61,7 @@ int addr_len, bytes_read;
 int send_len;
    
 struct sockaddr_in server_addr_in, client_addr_in;
-struct sockaddr_in server_addr_out, client_addr_out;
+struct sockaddr_in server_addr_out;
 struct hostent *host_out;
 
 int numBytes_out;
@@ -93,17 +97,16 @@ void init_sendData()
    
 //   fflush(stdout);
    numBytes_out = strlen(buf);
-   
-//while(1){
-   
-   if(sendto(sock_out,buf,strlen(buf),0,(struct sockaddr*)&server_addr_out,sizeof(struct sockaddr_in))!=numBytes_out)
+   char resp[100];
+   int sock_len = sizeof(struct sockaddr_in);
+   int numBytes = recvfrom(sock_out,resp,sizeof(resp),0,(struct sockaddr*)&server_addr_out, &sock_len);
+   if(numBytes == -1)
    {
-       perror("sendto");
-   }else{
-       printf("Send data Success\n");
+        perror("recvfrom");
    }
-   //usleep(3000000);
-//}
+       
+       printf("Response: %.*s\n", (int)numBytes, resp);
+
 }
 
 /*********************************************
@@ -145,14 +148,14 @@ void init_getData()
     printf("DATA: \n\r%s/n/r",rcv_data);
     
         sscanf(rcv_data,"%f%f%f%f%f%f%f%f%f%f%f",
-	&fdmData[LATITUDE],&fdmData[LONGITUDE],&fdmData[ALTITUDE],
+	&_getData.latitude,&fdmData[LONGITUDE],&fdmData[ALTITUDE],
 	&fdmData[AIRSPEED],&fdmData[HEADING],
 	&fdmData[X_ACCEL],&fdmData[Y_ACCEL],&fdmData[Z_ACCEL],
 	&fdmData[ROLL_RATE],&fdmData[PITCH_RATE],&fdmData[YAW_RATE]);
 
     //print data to screen for monitoring purpose
     sprintf(txr_data,"\nSensor Data\nLAT %f\nLON %f\nALT %f\nAIRSPEED %f\nHEAD %f\nX_accl%f\nY_accel%f\nZ_accel%f\nP_rate%f\nR_rate%f\nY_rate%f\n",
-	fdmData[LATITUDE],fdmData[LONGITUDE],fdmData[ALTITUDE],
+	_getData.latitude,fdmData[LONGITUDE],fdmData[ALTITUDE],
 	fdmData[AIRSPEED],fdmData[HEADING],
 	fdmData[X_ACCEL],fdmData[Y_ACCEL],fdmData[Z_ACCEL],
 	fdmData[ROLL_RATE],fdmData[PITCH_RATE],fdmData[YAW_RATE]);
@@ -213,18 +216,25 @@ void *funcNAV(void *threadp)
 
     //parse UDP data and store into float array
     sscanf(rcv_data,"%f%f%f%f%f%f%f%f%f%f%f",
-	&fdmData[LATITUDE],&fdmData[LONGITUDE],&fdmData[ALTITUDE],
-	&fdmData[AIRSPEED],&fdmData[HEADING],
-	&fdmData[X_ACCEL],&fdmData[Y_ACCEL],&fdmData[Z_ACCEL],
-	&fdmData[ROLL_RATE],&fdmData[PITCH_RATE],&fdmData[YAW_RATE]);
-
+	&_getData.latitude,&_getData.longitude,&_getData.altitude,
+	&_getData.airspeed,&_getData.heading,
+	&_getData.x_accel,&_getData.y_accel,&_getData.z_accel,
+	&_getData.roll_rate,&_getData.pitch_rate,&_getData.yag_rate);
+	
     //print data to screen for monitoring purpose
+/*
     sprintf(txr_data,"\nSensor Data\nLAT %f\nLON %f\nALT %f\nAIRSPEED %f\nHEAD %f\nX_accl%f\nY_accel%f\nZ_accel%f\nP_rate%f\nR_rate%f\nY_rate%f\n",
-	fdmData[LATITUDE],fdmData[LONGITUDE],fdmData[ALTITUDE],
-	fdmData[AIRSPEED],fdmData[HEADING],
-	fdmData[X_ACCEL],fdmData[Y_ACCEL],fdmData[Z_ACCEL],
-	fdmData[ROLL_RATE],fdmData[PITCH_RATE],fdmData[YAW_RATE]);
+	_getData.latitude,_getData.longitude,_getData.altitude,
+	_getData.airspeed,_getData.heading,
+	_getData.x_accel,_getData.y_accel,_getData.z_accel,
+	_getData.roll_rate,_getData.pitch_rate,_getData.yag_rate);
+*/
 
+    sprintf(txr_data,"%f\n%f\n%f\n%f\n%f\n%f\n%f\n%f\n%f\n%f\n%f\n",
+	_getData.latitude,_getData.longitude,_getData.altitude,
+	_getData.airspeed,_getData.heading,
+	_getData.x_accel,_getData.y_accel,_getData.z_accel,
+	_getData.roll_rate,_getData.pitch_rate,_getData.yag_rate);
 
        	}while(limit != 0);
        	
