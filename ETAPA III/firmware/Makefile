@@ -7,7 +7,7 @@ CFLAGS= -O0 -g $(INCLUDE_DIRS) $(CDEFS)
 LIBS= 
 
 HFILES= 
-CFILES= lab1.c
+CFILES= main.c
 
 SRCS= ${HFILES} ${CFILES}
 OBJS= ${CFILES:.c=.o}
@@ -18,7 +18,7 @@ clean:
 	-rm -f *.o *.d
 	-rm -f main
 
-lab1: main.o
+main: main.o
 	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $@.o -lpthread
 
 depend:

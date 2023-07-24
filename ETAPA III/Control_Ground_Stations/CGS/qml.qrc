@@ -6,5 +6,10 @@
         <file>ui/ControlScreen/ControlScreen.qml</file>
         <file>ui/MapScreen/MapScreen.qml</file>
         <file>ui/OrientationBar/Orientation.qml</file>
+        <file>ui/assets/Back.png</file>
+        <file>ui/assets/marker.png</file>
+        <file>ui/assets/orientation.png</file>
+        <file>ui/assets/Side.png</file>
+        <file>ui/assets/Top.png</file>
     </qresource>
 </RCC>

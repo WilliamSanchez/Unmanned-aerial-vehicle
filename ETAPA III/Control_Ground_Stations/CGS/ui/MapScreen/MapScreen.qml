@@ -14,6 +14,16 @@ Rectangle{
 
     property real _lat: 49.2827
     property real _lon: -123.1207
+    property int _alt: 500
+    property real _head: 0.0
+    property real _airs: 0.0
+    property real _xaccel: 0.0
+    property real _yaccel: 0.0
+    property real _zaccel: 0.0
+    property real _p_deg: 0.0
+    property real _r_deg: 0.0
+    property real _y_deg: 0.0
+
 
     Plugin{
         id: mapPlugin
@@ -23,8 +33,17 @@ Rectangle{
     Connections{
         target: uav
         onLatitudeChanged: {
-            _lon=uav.longitude
-            _lat = uav.latitude
+            _lon    = uav.longitude
+            _lat    = uav.latitude
+            _alt    = uav.alture
+            _head   = uav.heading
+            _airs   = uav.airspeed
+            _xaccel = uav.x_accel
+            _yaccel = uav.y_accel
+            _zaccel = uav.z_accel
+            _p_deg  = uav.p_rate
+            _r_deg  = uav.r_rate
+            _y_deg  = uav.y_rate
         }
     }
 
@@ -46,10 +65,11 @@ Rectangle{
                 coordinate: QtPositioning.coordinate(_lat,_lon)
                 sourceItem:     Image {
                     id: image
-                    width: 100/3
-                    height: 50/3
+                    width: 100
+                    height: 50
                     fillMode: Image.PreserveAspectFit
-                    source: "qrc:ui/assets/aircraft.png"
+                    source: "qrc:ui/assets/Top.png"
+                    transform: Rotation{origin.x: image.width/2; origin.y: image.height/2; axis { x: 0; y: 0; z: 1 } angle: _head}
                 }
             }
         }
@@ -60,8 +80,7 @@ Rectangle{
         anchors.topMargin: 5
         anchors.left: parent.left
         anchors.leftMargin: 5
-        text: qsTr("Lon: "+uav.latitude+"\nLat: "+uav.longitude+"\nAlt: "+1000)
-        color: "black"
+        text: qsTr("Lon: "+_lon+"\nLat: "+_lat+"\nAlt: "+_alt+"\nSpeed: "+_airs)
         font.pixelSize: 15
         opacity: 0.8
         z: parent.z + 10
