@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/qml">
+        <file>main.qml</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>../ui/assets/aircraft.png</file>
+        <file>../ui/assets/Back.png</file>
+        <file>../ui/assets/functions.js</file>
+        <file>../ui/assets/marker.png</file>
+        <file>../ui/assets/orientation.png</file>
+        <file>../ui/assets/Side.png</file>
+        <file>../ui/assets/Top.png</file>
+        <file>../ui/ControlScreen/ControlScreen.qml</file>
+        <file>../ui/MapScreen/MapScreen.qml</file>
+        <file>../ui/OrientationBar/Orientation.qml</file>
+    </qresource>
+</RCC>

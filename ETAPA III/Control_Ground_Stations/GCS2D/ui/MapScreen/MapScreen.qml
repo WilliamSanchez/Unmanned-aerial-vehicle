@@ -18,7 +18,7 @@ Rectangle{
 
     property real _lat: 49.2827
     property real _lon: -123.1207
-    property int _alt: 500
+    property real _alt: 700
     property real _head: 0.0
     property real _airs: 0.0
     property real _xaccel: 0.0
@@ -44,7 +44,7 @@ Rectangle{
             _y_deg  = uav.y_rate
 
             ptBuilder.setXY(_lon, _lat);
-             mv.setViewpointCenterAndScale(ptBuilder.geometry, _alt+500);
+             mv.setViewpointCenterAndScale(ptBuilder.geometry, _alt+700);
         }
     }
 
