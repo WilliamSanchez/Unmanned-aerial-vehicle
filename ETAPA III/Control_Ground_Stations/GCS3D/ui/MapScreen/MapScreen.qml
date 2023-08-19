@@ -63,9 +63,9 @@ Rectangle {
                 z: _alt,
                 spatialReference: Factory.SpatialReference.createWgs84()
             });
-            thePlane.attributes.replaceAttribute(headingAtt, _head);
+            thePlane.attributes.replaceAttribute(headingAtt, _head+70);
             thePlane.attributes.replaceAttribute(pitchAtt, _p_deg);
-            thePlane.attributes.replaceAttribute(rollAtt, _r_deg);
+            thePlane.attributes.replaceAttribute(rollAtt, _r_deg-5);
 
         }
     }
@@ -117,7 +117,7 @@ Rectangle {
 
             ModelSceneSymbol {
                 id: mms
-                url: System.resolvedPath(dataPath) + "/Bristol/Bristol.dae"
+                url: System.resolvedPath(dataPath) + "/Bristol/UAV_Blender_ver3a.dae"//Bristol.dae"
                 scale: 10.0
                 heading: 0.0
             }
