@@ -26,7 +26,7 @@ double dataUAV::longitude()
 
 double dataUAV::alture()
 {
-    return _Alture;
+    return (int16_t)_Alture;
 }
 
 double dataUAV::airspeed()

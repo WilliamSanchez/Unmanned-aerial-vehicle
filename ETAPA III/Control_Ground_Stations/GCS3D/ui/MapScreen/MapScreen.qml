@@ -26,7 +26,7 @@ Rectangle {
 
     property real _lat: 49.2827
     property real _lon: -123.1207
-    property real _alt: 700
+    property int _alt: 700
     property real _head: 0.0
     property real _airs: 0.0
     property real _xaccel: 0.0
@@ -63,9 +63,9 @@ Rectangle {
                 z: _alt,
                 spatialReference: Factory.SpatialReference.createWgs84()
             });
-            thePlane.attributes.replaceAttribute(headingAtt, _head+70);
-            thePlane.attributes.replaceAttribute(pitchAtt, _p_deg);
-            thePlane.attributes.replaceAttribute(rollAtt, _r_deg-5);
+            thePlane.attributes.replaceAttribute(headingAtt, _head+90);
+            thePlane.attributes.replaceAttribute(pitchAtt, _r_deg);
+            thePlane.attributes.replaceAttribute(rollAtt, _p_deg);
 
         }
     }
