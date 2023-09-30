@@ -13,5 +13,6 @@
         <file>../ui/ControlScreen/ControlScreen.qml</file>
         <file>../ui/MapScreen/MapScreen.qml</file>
         <file>../ui/OrientationBar/Orientation.qml</file>
+        <file>../ui/OrientationBar/ArtificialHorizon.qml</file>
     </qresource>
 </RCC>

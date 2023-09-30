@@ -48,12 +48,12 @@ Rectangle {
             _lon    = uav.longitude
             _lat    = uav.latitude
             _alt    = uav.alture*0.3048
-            _head   = uav.heading
+            _head   = uav.heading+80
             _airs   = uav.airspeed
             _xaccel = uav.x_accel
             _yaccel = uav.y_accel
             _zaccel = uav.z_accel
-            _p_deg  = uav.p_rate
+            _p_deg  = -uav.p_rate
             _r_deg  = uav.r_rate
             _y_deg  = uav.y_rate
 
@@ -63,13 +63,12 @@ Rectangle {
                 z: _alt,
                 spatialReference: Factory.SpatialReference.createWgs84()
             });
-            thePlane.attributes.replaceAttribute(headingAtt, _head+90);
+            thePlane.attributes.replaceAttribute(headingAtt, _head);
             thePlane.attributes.replaceAttribute(pitchAtt, _r_deg);
             thePlane.attributes.replaceAttribute(rollAtt, _p_deg);
 
         }
     }
-
 
     OrbitGeoElementCameraController{
         id: orbitPlaneCtrlr
@@ -111,7 +110,7 @@ Rectangle {
                     id: renderProps
                     headingExpression: attrFormat.arg(headingAtt)
                     pitchExpression:  attrFormat.arg(pitchAtt)
-                    rollExpression: attrFormat.arg(rollAtt)
+                    rollExpression: attrFormat.arg(-rollAtt)
                 }
             }
 
@@ -155,7 +154,7 @@ Rectangle {
         anchors.topMargin: 5
         anchors.left: parent.left
         anchors.leftMargin: 5
-        text: qsTr("Lon: "+_lat+"\nLat: "+_lon+"\nAlt: "+_alt)
+        text: qsTr("Lat: "+_lat+"\nLon: "+_lon+"\nAlt: "+_alt)
         color: "black"
         font.pixelSize: 15
         opacity: 0.8

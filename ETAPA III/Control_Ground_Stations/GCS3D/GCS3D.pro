@@ -59,3 +59,6 @@ OTHER_FILES += \
 HEADERS += \
     datauav.h
 
+DISTFILES += \
+    ui/OrientationBar/ArtificialHorizon.qml
+

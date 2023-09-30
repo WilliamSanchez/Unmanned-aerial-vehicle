@@ -19,6 +19,11 @@ Rectangle{
           color: "red"
           width: orientationBar.width/4-10
           height: orientationBar.height-10
+          ArtificialHorizon {
+              anchors.centerIn: parent
+              width: parent.width
+              height: parent.height
+          }
       }
 
       Rectangle{
@@ -92,18 +97,8 @@ Rectangle{
               height: 0.85*parent.height
               fillMode: Image.PreserveAspectFit
               source: "qrc:ui/assets/Side.png"
-              transform: Rotation{origin.x: side.width/2; origin.y: side.height/2; axis { x: 0; y: 0; z: 1 } angle: -mapScreen._p_deg}
+              transform: Rotation{origin.x: side.width/2; origin.y: side.height/2; axis { x: 0; y: 0; z: 1 } angle: mapScreen._p_deg}
 
-          }
-
-          Button{
-              anchors.right: parent.right
-              anchors.top:parent.top
-              height: parent.height/5
-              width: parent.width/6
-              text: 'SendData'
-              visible: true
-              onClicked: uav.sendData()
           }
 
       }

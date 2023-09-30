@@ -314,14 +314,14 @@ void *sequencer(void *threadp)
       usleep(20*USER_PER_MSEC);sem_post(&semCTL);
       printf("t=%lf\n",event_time=getTimeMsec()-start_time);
       
-      usleep(20*USER_PER_MSEC);sem_post(&semCTL);
-      printf("t=%lf\n",event_time=getTimeMsec()-start_time);
+//      usleep(20*USER_PER_MSEC);sem_post(&semCTL);
+//      printf("t=%lf\n",event_time=getTimeMsec()-start_time);
       
       usleep(20*USER_PER_MSEC);sem_post(&semNAV);
       printf("t=%lf\n",event_time=getTimeMsec()-start_time);
       
-      usleep(20*USER_PER_MSEC);sem_post(&semCTL);
-      printf("t=%lf\n",event_time=getTimeMsec()-start_time);
+//      usleep(20*USER_PER_MSEC);sem_post(&semCTL);
+//      printf("t=%lf\n",event_time=getTimeMsec()-start_time);
       
       usleep(20*USER_PER_MSEC);
       MajorPeriodCnt ++;
