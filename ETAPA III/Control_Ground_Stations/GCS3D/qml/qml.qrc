@@ -10,6 +10,8 @@
         <file>../ui/assets/orientation.png</file>
         <file>../ui/assets/Side.png</file>
         <file>../ui/assets/Top.png</file>
+        <file>../ui/assets/rotate_roll.png</file>
+        <file>../ui/assets/rotate_pitch.png</file>
         <file>../ui/ControlScreen/ControlScreen.qml</file>
         <file>../ui/MapScreen/MapScreen.qml</file>
         <file>../ui/OrientationBar/Orientation.qml</file>
