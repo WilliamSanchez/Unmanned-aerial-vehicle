@@ -3,14 +3,19 @@ import QtQuick.Shapes 1.12
 
 Rectangle {
 
-    property real roll_deg: -25.0
-    property real roll: roll_deg*Math.PI/180
-    property real pitch: -30.0*Math.PI/180
-    color: "red"
+    width: parent.width
+    height: parent.height
+
+    property real roll_deg:  mapScreen._r_deg
+    property real pitch_deg:  mapScreen._p_deg
+    property real roll:  roll_deg*Math.PI/180
+    property real pitch: pitch_deg*Math.PI/180
+
 
     Shape {
-        id: circle
+
         anchors.centerIn: parent
+
         property real r: 100
         property real h: 80
 
@@ -41,6 +46,17 @@ Rectangle {
             }
         }
 
+    }
+
+
+    Shape {
+        id: circle
+        anchors.centerIn: parent
+
+        property real r: 100
+        property real h: 80
+
+
         ShapePath {
             strokeColor: "transparent"
             fillGradient: RadialGradient{
@@ -57,7 +73,7 @@ Rectangle {
                 x: circle.width/2 + circle.h*(Math.cos(roll-pitch))
                 y: circle.width/2 + circle.h*(Math.sin(roll-pitch))
                 radiusX: circle.h; radiusY: circle.h
-                useLargeArc: true
+                useLargeArc: pitch < 0 ? true : false
             }
         }
 
@@ -70,8 +86,86 @@ Rectangle {
                 x: circle.width/2 - circle.h*Math.cos(roll+pitch)
                 y: circle.width/2 - circle.h*Math.sin(roll+pitch)
                 radiusX: circle.h; radiusY: circle.h
-                //useLargeArc: true
+                useLargeArc: pitch > 0 ? true : false
             }
+        }
+
+
+        ShapePath {
+            strokeColor: "green"
+            fillColor: "transparent"
+            strokeWidth: 5
+            startX: circle.width/2 - circle.h*(Math.cos(roll+pitch))
+            startY:  circle.height/2 - circle.h*(Math.sin(roll+pitch))
+            PathLine {
+                x: circle.width/2 + circle.h*(Math.cos(roll-pitch))
+                y: circle.width/2 + circle.h*(Math.sin(roll-pitch))
+            }
+        }
+
+        ShapePath {
+            strokeColor: "transparent"
+            fillColor: "black"
+            strokeWidth: 3
+            startX: (circle.width/2)*Math.cos(roll)
+            startY: (circle.width/2)*Math.sin(roll)
+
+            PathLine {
+                x: (circle.width/2)*Math.cos(roll)+ 25*(Math.cos(Math.PI/10))
+                y: (circle.width/2)*Math.sin(roll) + 25*(Math.sin(Math.PI/10))
+            }
+            PathLine {
+                x: (circle.width/2)*Math.cos(roll) - 25*(Math.cos(Math.PI/10))
+                y: (circle.width/2)*Math.sin(roll) + 25*(Math.sin(Math.PI/10))
+            }
+            PathLine {
+                x: (circle.width/2)*Math.cos(roll)
+                y:( circle.width/2)*Math.sin(roll)
+            }
+        }
+
+/*
+        ShapePath {
+            strokeColor: "transparent"
+            fillColor: "black"
+            strokeWidth: 3
+            startX: (circle.width/2)*Math.cos(roll)+circle.h*Math.sin(pitch)*Math.cos(Math.PI/2-roll)
+            startY: (circle.width/2)*Math.sin(roll)-circle.h*Math.sin(pitch)*Math.sin(Math.PI/2-roll)
+
+            PathLine {
+                x: (circle.width/2)*Math.cos(roll)+circle.h*Math.sin(pitch)*Math.cos(Math.PI/2-roll) + 25*(Math.cos(Math.PI/10))
+                y: (circle.width/2)*Math.sin(roll)-circle.h*Math.sin(pitch)*Math.sin(Math.PI/2-roll) + 25*(Math.sin(Math.PI/10))
+            }
+            PathLine {
+                x: (circle.width/2)*Math.cos(roll)+circle.h*Math.sin(pitch)*Math.cos(Math.PI/2-roll) - 25*(Math.cos(Math.PI/10))
+                y: (circle.width/2)*Math.sin(roll)-circle.h*Math.sin(pitch)*Math.sin(Math.PI/2-roll) + 25*(Math.sin(Math.PI/10))
+            }
+            PathLine {
+                x: (circle.width/2)*Math.cos(roll)+circle.h*Math.sin(pitch)*Math.cos(Math.PI/2-roll)
+                y:( circle.width/2)*Math.sin(roll)-circle.h*Math.sin(pitch)*Math.sin(Math.PI/2-roll)
+            }
+        }
+*/
+        ShapePath {
+            fillColor: "transparent"
+            strokeColor: "red"
+            strokeWidth: 1
+            startX: 0
+            startY: -80
+
+            PathLine {
+                x: 10*Math.cos(Math.PI/4)
+                y: -80+10*Math.sin(Math.PI/4)
+            }
+            PathLine {
+                x: -10*Math.cos(Math.PI/4)
+                y:  -80+10*Math.sin(Math.PI/4)
+            }
+            PathLine {
+                x: 0
+                y: -80
+            }
+
         }
 
     }
@@ -99,6 +193,5 @@ Rectangle {
         transform: Rotation{origin.x: top.width/2; origin.y: top.height/2; axis { x: 0; y: 0; z: 1 } angle: roll_deg}
 
     }
-
 
 }
