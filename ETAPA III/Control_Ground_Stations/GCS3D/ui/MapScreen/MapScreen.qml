@@ -65,7 +65,7 @@ Rectangle {
             });
             thePlane.attributes.replaceAttribute(headingAtt, _head);
             thePlane.attributes.replaceAttribute(pitchAtt, _r_deg);
-            thePlane.attributes.replaceAttribute(rollAtt, _p_deg);
+            thePlane.attributes.replaceAttribute(rollAtt, -_p_deg);
 
         }
     }
@@ -110,7 +110,7 @@ Rectangle {
                     id: renderProps
                     headingExpression: attrFormat.arg(headingAtt)
                     pitchExpression:  attrFormat.arg(pitchAtt)
-                    rollExpression: attrFormat.arg(-rollAtt)
+                    rollExpression: attrFormat.arg(rollAtt)
                 }
             }
 
@@ -147,8 +147,6 @@ Rectangle {
           }
 
     }
-
-
     Text {
         anchors.top: parent.top
         anchors.topMargin: 5

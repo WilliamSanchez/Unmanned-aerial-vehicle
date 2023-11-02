@@ -38,11 +38,12 @@ public:
 
 signals:
     void latitudeChanged();
-  void longitudeChanged();
+    void longitudeChanged();
 
 public slots:
     void readData();
     void sendData();
+    void connectIP(QString addressIP);
 
 private:
     QUdpSocket *_socket;

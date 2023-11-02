@@ -93,7 +93,7 @@ void init_sendData()
    	//exit(1);
    }
    
-   printf("\nSend data in the port 4545\n");
+   printf("\nSend data in the port %d\n",PORT_NUM);
    
 //   fflush(stdout);
    numBytes_out = strlen(buf);

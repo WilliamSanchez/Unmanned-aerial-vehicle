@@ -2,9 +2,9 @@ import QtQuick 2.15
 import QtQuick.Shapes 1.12
 
 Rectangle {
-
-    width: parent.width
-    height: parent.height
+    id: artificialHorizon
+    //width: parent.width
+    //height: parent.height
 
     property real roll_deg:  mapScreen._r_deg
     property real pitch_deg:  mapScreen._p_deg
@@ -16,8 +16,8 @@ Rectangle {
 
         anchors.centerIn: parent
 
-        property real r: 100
-        property real h: 80
+        property real r: artificialHorizon.height/2
+        property real h: 3*artificialHorizon.height/4
 
 
         ShapePath {

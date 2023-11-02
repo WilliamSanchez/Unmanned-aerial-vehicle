@@ -11,7 +11,7 @@
 //
 
 import QtQuick 2.15
-import QtQuick.Window 2.15
+import QtQuick.Window 2.12
 import "../ui/MapScreen"
 import "../ui/OrientationBar"
 import "../ui/ControlScreen"
