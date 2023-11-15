@@ -15,9 +15,11 @@ Rectangle {
     Shape {
 
         anchors.centerIn: parent
+        width: parent.height
+        height: parent.height
 
-        property real r: artificialHorizon.height/2
-        property real h: 3*artificialHorizon.height/4
+        property real r: parent.height/2
+        property real h: parent.height/2
 
 
         ShapePath {
@@ -53,8 +55,11 @@ Rectangle {
         id: circle
         anchors.centerIn: parent
 
-        property real r: 100
-        property real h: 80
+        width: parent.height
+        height: parent.height
+
+        property real r: circle.height/2
+        property real h: 3*circle.height/8
 
 
         ShapePath {
@@ -62,7 +67,7 @@ Rectangle {
             fillGradient: RadialGradient{
                 centerX: circle.width/2
                 centerY : circle.height/2
-                centerRadius: 100
+                centerRadius:  circle.r
                 focalX: centerX; focalY: centerY
                 GradientStop { position: 0; color: "white" }
                 GradientStop { position: 0.7; color: "darkblue" }
@@ -107,20 +112,19 @@ Rectangle {
             strokeColor: "transparent"
             fillColor: "black"
             strokeWidth: 3
-            startX: (circle.width/2)*Math.cos(roll)
-            startY: (circle.width/2)*Math.sin(roll)
-
+            startX: circle.width/2
+            startY: circle.height/2
             PathLine {
-                x: (circle.width/2)*Math.cos(roll)+ 25*(Math.cos(Math.PI/10))
-                y: (circle.width/2)*Math.sin(roll) + 25*(Math.sin(Math.PI/10))
+                x: circle.width/2 + circle.width/12*Math.cos(Math.PI/10)
+                y: circle.height/2 + circle.height/12*Math.sin(Math.PI/10)
             }
             PathLine {
-                x: (circle.width/2)*Math.cos(roll) - 25*(Math.cos(Math.PI/10))
-                y: (circle.width/2)*Math.sin(roll) + 25*(Math.sin(Math.PI/10))
+                x: circle.width/2 - circle.width/12*Math.cos(Math.PI/10)
+                y: circle.height/2 + circle.height/12*Math.sin(Math.PI/10)
             }
             PathLine {
-                x: (circle.width/2)*Math.cos(roll)
-                y:( circle.width/2)*Math.sin(roll)
+                x: circle.width/2
+                y: circle.height/2
             }
         }
 
@@ -149,23 +153,22 @@ Rectangle {
         ShapePath {
             fillColor: "transparent"
             strokeColor: "red"
-            strokeWidth: 1
-            startX: 0
-            startY: -80
+            strokeWidth: 2
+            startX: circle.width/2
+            startY: circle.height/12
 
             PathLine {
-                x: 10*Math.cos(Math.PI/4)
-                y: -80+10*Math.sin(Math.PI/4)
+                x: circle.width/2+circle.width/20*Math.cos(Math.PI/4)
+                y: circle.height/6*Math.sin(Math.PI/4)
             }
             PathLine {
-                x: -10*Math.cos(Math.PI/4)
-                y:  -80+10*Math.sin(Math.PI/4)
+                x: circle.width/2-circle.width/20*Math.cos(Math.PI/4)
+                y: circle.height/6*Math.sin(Math.PI/4)
             }
             PathLine {
-                x: 0
-                y: -80
+                x: circle.width/2
+                y: circle.height/12
             }
-
         }
 
     }
@@ -184,8 +187,8 @@ Rectangle {
     Image {
         //id: pitch
         //anchors.centerIn: parent
-        x: (circle.width/2)*Math.cos(roll)+circle.h*Math.sin(pitch)*Math.cos(Math.PI/2-roll)
-        y: (circle.width/2)*Math.sin(roll)-circle.h*Math.sin(pitch)*Math.sin(Math.PI/2-roll)
+        x: circle.h*Math.sin(pitch)*Math.cos(Math.PI/2-roll)
+        y: -circle.h*Math.sin(pitch)*Math.sin(Math.PI/2-roll)
         width: parent.width
         height: parent.height
         fillMode: Image.PreserveAspectFit
