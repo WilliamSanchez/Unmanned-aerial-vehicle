@@ -28,7 +28,7 @@ Rectangle {
     property real _lon: -123.1207
     property int _alt: 700
     property real _head: 0.0
-    property real _airs: 0.0
+    property int _airs: 0.0
     property real _xaccel: 0.0
     property real _yaccel: 0.0
     property real _zaccel: 0.0
@@ -47,8 +47,8 @@ Rectangle {
         onLatitudeChanged: {
             _lon    = uav.longitude
             _lat    = uav.latitude
-            _alt    = uav.alture*0.3048
-            _head   = uav.heading+80
+            _alt    = uav.alture*0.3048-3.15
+            _head   = uav.heading+90
             _airs   = uav.airspeed
             _xaccel = uav.x_accel
             _yaccel = uav.y_accel
@@ -64,7 +64,7 @@ Rectangle {
                 spatialReference: Factory.SpatialReference.createWgs84()
             });
             thePlane.attributes.replaceAttribute(headingAtt, _head);
-            thePlane.attributes.replaceAttribute(pitchAtt, _r_deg);
+            thePlane.attributes.replaceAttribute(pitchAtt, -_r_deg);
             thePlane.attributes.replaceAttribute(rollAtt, -_p_deg);
 
         }
@@ -73,7 +73,7 @@ Rectangle {
     OrbitGeoElementCameraController{
         id: orbitPlaneCtrlr
         targetGeoElement: thePlane
-        cameraDistance: 5000
+        cameraDistance: 500
         //cameraPitchOffset: _p_deg
     }
 
@@ -128,12 +128,12 @@ Rectangle {
                 geometry: Point {
                     x: _lon
                     y: _lat
-                    z: 5000
+                    z: _alt
                     spatialReference: sceneView.spatialReference
                 }
 
                 Component.onCompleted: {
-                    thePlane.attributes.insertAttribute(headingAtt, 0.);
+                    thePlane.attributes.insertAttribute(headingAtt, 90.);
                     thePlane.attributes.insertAttribute(rollAtt, 0.);
                     thePlane.attributes.insertAttribute(pitchAtt, 0.);
                 }
@@ -152,7 +152,7 @@ Rectangle {
         anchors.topMargin: 5
         anchors.left: parent.left
         anchors.leftMargin: 5
-        text: qsTr("Lat: "+_lat+"\nLon: "+_lon+"\nAlt: "+_alt)
+        text: qsTr("Lat: "+_lat+"\nLon: "+_lon+"\nAlt: "+_alt+"\nVel: "+ _airs)
         color: "black"
         font.pixelSize: 15
         opacity: 0.8

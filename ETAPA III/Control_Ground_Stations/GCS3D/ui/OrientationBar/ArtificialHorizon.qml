@@ -8,7 +8,7 @@ Rectangle {
 
     property real roll_deg:  mapScreen._r_deg
     property real pitch_deg:  mapScreen._p_deg
-    property real roll:  roll_deg*Math.PI/180
+    property real roll:  -roll_deg*Math.PI/180
     property real pitch: pitch_deg*Math.PI/180
 
 
