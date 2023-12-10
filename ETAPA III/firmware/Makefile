@@ -7,18 +7,21 @@ CFLAGS= -O0 -g $(INCLUDE_DIRS) $(CDEFS)
 LIBS= 
 
 HFILES= 
-CFILES= main.c
+CFILES= main.c processor.c
 
 SRCS= ${HFILES} ${CFILES}
 OBJS= ${CFILES:.c=.o}
 
-all:	main
+all:	main processor
 
 clean:
 	-rm -f *.o *.d
-	-rm -f main
+	-rm -f main processor
 
 main: main.o
+	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $@.o -lpthread
+	
+main: processor.o
 	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $@.o -lpthread
 
 depend:

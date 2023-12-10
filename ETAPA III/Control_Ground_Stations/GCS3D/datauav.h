@@ -47,6 +47,7 @@ public slots:
 
 private:
     QUdpSocket *_socket;
+    QUdpSocket *_socket_CPU;
 
     double _Latitude;
     double _Longitude;
