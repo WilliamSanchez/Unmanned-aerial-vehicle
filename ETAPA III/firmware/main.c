@@ -61,7 +61,7 @@ int addr_len, bytes_read;
 int send_len;
    
 struct sockaddr_in server_addr_in, client_addr_in;
-struct sockaddr_in server_addr_out;
+struct sockaddr_in server_addr_out, client_addr_out;
 struct hostent *host_out;
 
 int numBytes_out;
@@ -99,7 +99,7 @@ void init_sendData()
    numBytes_out = strlen(buf);
    char resp[100];
    int sock_len = sizeof(struct sockaddr_in);
-   int numBytes = recvfrom(sock_out,resp,sizeof(resp),0,(struct sockaddr*)&server_addr_out, &sock_len);
+   int numBytes = recvfrom(sock_out,resp,sizeof(resp),0,(struct sockaddr*)&client_addr_out, &sock_len);
    if(numBytes == -1)
    {
         perror("recvfrom");
@@ -145,7 +145,7 @@ void init_getData()
    
        // print where it got the UDP data from and the raw data
     printf("\n(%s,%d)said:",inet_ntoa(client_addr_in.sin_addr),ntohs(client_addr_in.sin_port));
-    printf("DATA: \n\r%s/n/r",rcv_data);
+    printf("DATA: \n\r%s\n\r",rcv_data);
     
         sscanf(rcv_data,"%f%f%f%f%f%f%f%f%f%f%f",
 	&_getData.latitude,&fdmData[LONGITUDE],&fdmData[ALTITUDE],
@@ -273,7 +273,7 @@ void *funcCTL(void *threadp)
        	
        	do
        	{
-               if(sendto(sock_out,txr_data,strlen(txr_data),0,(struct sockaddr*)&server_addr_out,sizeof(struct sockaddr_in))!=numBytes_out)
+               if(sendto(sock_out,txr_data,strlen(txr_data),0,(struct sockaddr*)&client_addr_out,sizeof(struct sockaddr_in))!=numBytes_out)
                {
                   perror("sendto");
                }else{
@@ -426,7 +426,7 @@ int main()
   for(i=0; i<NUM_THREADS; i++)
   {
   	CPU_ZERO(&threadcpu);
-  	CPU_SET(1,&threadcpu);
+  	CPU_SET(2,&threadcpu);
   	
   	rc = pthread_attr_init(&rt_sched_attr[i]);
   	rc = pthread_attr_setinheritsched(&rt_sched_attr[i],PTHREAD_EXPLICIT_SCHED);

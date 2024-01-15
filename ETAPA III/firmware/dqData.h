@@ -36,7 +36,16 @@ typedef struct dqData
 	float z_accel;
 	float roll_rate;
 	float pitch_rate;
-	float yag_rate; 
-};
+	float yaw_rate; 
+}dqData;
+
+
+
+typedef struct attitude
+{
+	float roll;
+	float pitch;
+	float yaw; 
+}attitude;
 
 #endif

@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <version type="int">2</version>
+  <flight-rules type="string">V</flight-rules>
+  <flight-type type="string">G</flight-type>
+  <estimated-duration-minutes type="int">936</estimated-duration-minutes>
+  <departure>
+    <airport type="string">KJFK</airport>
+  </departure>
+  <destination>
+    <airport type="string">CYYZ</airport>
+  </destination>
+  <alternate type="string">CYUL</alternate>
+  <cruise>
+    <altitude-ft type="int">15050</altitude-ft>
+    <knots type="int">290</knots>
+  </cruise>
+  <route>
+    <wp>
+      <type type="string">navaid</type>
+      <ident type="string">JFK</ident>
+      <lon type="double">-73.77138889</lon>
+      <lat type="double">40.63288889</lat>
+    </wp>
+    <wp n="1">
+      <type type="string">navaid</type>
+      <airway type="string">J63</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">HUO</ident>
+      <lon type="double">-74.59159444</lon>
+      <lat type="double">41.40968611</lat>
+    </wp>
+    <wp n="2">
+      <type type="string">navaid</type>
+      <airway type="string">J63</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">STOMP</ident>
+      <lon type="double">-74.796608</lon>
+      <lat type="double">41.596328</lat>
+    </wp>
+    <wp n="3">
+      <type type="string">navaid</type>
+      <airway type="string">J95</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">BUFFY</ident>
+      <lon type="double">-75.612597</lon>
+      <lat type="double">41.941106</lat>
+    </wp>
+    <wp n="4">
+      <type type="string">navaid</type>
+      <airway type="string">J95</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">CFB</ident>
+      <lon type="double">-76.13647222</lon>
+      <lat type="double">42.15748889</lat>
+    </wp>
+    <wp n="5">
+      <type type="string">navaid</type>
+      <airway type="string">J95</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">KELIE</ident>
+      <lon type="double">-77.744736</lon>
+      <lat type="double">42.660367</lat>
+    </wp>
+    <wp n="6">
+      <type type="string">navaid</type>
+      <airway type="string">J95</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">BUF</ident>
+      <lon type="double">-78.64633333</lon>
+      <lat type="double">42.929</lat>
+    </wp>
+    <wp n="7">
+      <type type="string">navaid</type>
+      <airway type="string">J95</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">NNSIQ</ident>
+      <lon type="double">-79.053711</lon>
+      <lat type="double">43.233575</lat>
+    </wp>
+    <wp n="8">
+      <type type="string">navaid</type>
+      <ident type="string">YYZ</ident>
+      <lon type="double">-79.63152778</lon>
+      <lat type="double">43.65822222</lat>
+    </wp>
+  </route>
+</PropertyList>
