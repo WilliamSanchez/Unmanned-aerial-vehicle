@@ -41,10 +41,19 @@
  
         <!-- ##### HEADING ##### -->
 
+<!--
       <chunk> 
 	<name>heading</name>
 	<type>double</type>
 	<node>/orientation/heading-magnetic-deg</node>
+	<format>%03.5f</format>
+      </chunk>
+-->
+
+      <chunk> 
+	<name>heading</name>
+	<type>double</type>
+	<node>/orientation/heading-deg</node>
 	<format>%03.5f</format>
       </chunk>
 

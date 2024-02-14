@@ -1,50 +1,29 @@
-# Run a bash scipt from a makefile
-########################################################
-#
-#.PHONY: do_script
-#
-#do_script: 
-#    shell_script arg1 arg2 arg3
-#
-#prerequisites: do_script
-#
-#target: prerequisites 
-#
-########################################################
+CC = gcc
+DEPS = matrices.h nav_func.h
+OBJ = matrices.o nav_func.o
+CFLAGS = -I. 
+LIBS=-lm -lpthread
 
-INCLUDE_DIRS = 
-LIB_DIRS = 
-CC=gcc
+all: fgfs_uav main processor
 
-CDEFS=
-CFLAGS= -O0 -g $(INCLUDE_DIRS) $(CDEFS)
-LIBS= 
+%.o: %.c $(DEPS)
+	$(CC) $(CFLAGS) -c -o $@ $< $(LIBS)
+	
+fgfs_uav: fgfs_uav.o $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+	
+main: main.o $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
-HFILES= 
-CFILES= main.c processor.c fgfs_uav.c
+processor: processor.o $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
-SRCS= ${HFILES} ${CFILES}
-OBJS= ${CFILES:.c=.o}
-
-all:	main processor fgfs_uav
+.PHONY: clean 
 
 clean:
-	-rm -f *.o *.d
-	-rm -f main processor fgfs_uav
-
-main: main.o
-	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $@.o -lpthread
-	
-processor: processor.o
-	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $@.o -lpthread
-	
-fgfs_uav: fgfs_uav.o
-	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $@.o -lpthread
-
-depend:
-
-.c.o:
-	$(CC) $(CFLAGS) -c $<
+	rm -f *.o fgfs_uav  main processor *~
 	
 	
 	
+#lsof -i UDP:5500
+#kill -9 12796

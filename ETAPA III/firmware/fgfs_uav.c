@@ -19,6 +19,10 @@
 #include <string.h>
 
 #include "dqData.h"
+#include "matrices.h"
+#include "nav_func.h"
+
+#include <time.h>
 
 
 #define sensor_data
@@ -38,13 +42,15 @@
 #define ROLL_RATE		10
 #define YAW_RATE		11
 
+#define PI 3.14159265358979
+
 #define BUF_SIZE 10
 #define PORT_NUM 4500
 
 struct dqData _getData;
 struct attitude _attitude_calc;
 
-double getTimeMsec();
+
 char rcv_data[1024];
 char txr_data[1024];
 int sock_in, sock_out;
@@ -62,15 +68,21 @@ struct hostent *host_out;
 
 int abortProgram = 0;
 
+
+double giro_data[3];
+Matrix DCM, qDCM;
+double euler[3];
+double quat[4], newquat[4];
+double actual_time= 0.0;
+double delta_data = 0.0;
+ 
 void endProgram(int sig)
 {
    abortProgram = 1;
 }
 
 void init_getData();
-
-attitude orientation(float pitch_rate, float yaw_rate, float roll_rate);
-
+double getTimeMsec();
 
 int main(int argc, char **argv)
 {
@@ -90,48 +102,68 @@ int main(int argc, char **argv)
     }
   }
   
+   DCM = create_mat(3,3);
+    qDCM = create_mat(4,4); 
    
   printf("\n\n\n\t\t\tSTART PROGRAM\n");
   
   signal(SIGINT, endProgram);
-  init_getData();    
+  
+   init_getData();    
         
   attitude _orientation;
         
   while(abortProgram != 1)
   {
-  
-  	system("clear");
-  
+
         bytes_read = recvfrom(sock_in,rcv_data,1024,0,(struct sockaddr*)&client_addr_in,&addr_len);
         rcv_data[bytes_read] = '\0';
    
         // print where it got the UDP data from and the raw data
-        printf("\n(%s,%d)said:",inet_ntoa(client_addr_in.sin_addr),ntohs(client_addr_in.sin_port));
-//        printf("DATA: %s\n\r",rcv_data);
+        // printf("\n(%s,%d)said:",inet_ntoa(client_addr_in.sin_addr),ntohs(client_addr_in.sin_port));
+	// printf("DATA: %s\n\r",rcv_data);
 
-    //parse UDP data and store into float array
-    sscanf(rcv_data,"%f%f%f%f%f%f%f%f%f%f%f",
-	&_getData.latitude,&_getData.longitude,&_getData.altitude,
-	&_getData.airspeed,&_getData.heading,
-	&_getData.x_accel,&_getData.y_accel,&_getData.z_accel,
-	&_getData.roll_rate,&_getData.pitch_rate,&_getData.yaw_rate);
+    	//parse UDP data and store into float array
+    	sscanf(rcv_data,"%f%f%f%f%f%f%f%f%f%f%f",
+		&_getData.latitude,&_getData.longitude,&_getData.altitude,
+		&_getData.airspeed,&_getData.heading,
+		&_getData.x_accel,&_getData.y_accel,&_getData.z_accel,
+		&_getData.roll_rate,&_getData.pitch_rate,&_getData.yaw_rate);
 	
-    //print data to screen for monitoring purpose
+    	//print data to screen for monitoring purpose
 
-    printf("\nSensor Data\nLAT %f\nLON %f\nALT %f\nAIRSPEED %f\nHEAD %f\nX_accl %f\nY_accel %f\nZ_accel %f\nP_rate %f\nR_rate %f\nY_rate %f\n",
+    	printf("\nSensor Data\nLAT %f\nLON %f\nALT %f\nAIRSPEED %f\nHEAD %f\nX_accl %f\nY_accel %f\nZ_accel %f\nR_rate %f\nP_rate %f\nY_rate %f\n",
 	_getData.latitude,_getData.longitude,_getData.altitude,
 	_getData.airspeed,_getData.heading,
 	_getData.x_accel,_getData.y_accel,_getData.z_accel,
 	_getData.roll_rate,_getData.pitch_rate,_getData.yaw_rate);
   
       printf("\n\t\tORIENTATION\n");
-  
-      _orientation = orientation(_getData.pitch_rate, _getData.yaw_rate, _getData.roll_rate);
-  
-     printf("\nPITCH %f\nROLL %f\nYAW %f\n",_orientation.pitch, _orientation.roll,_orientation.yaw);
-  
-      usleep(100000);
+      
+      
+      giro_data[0] = _getData.roll_rate*PI/180; 
+      giro_data[1] = _getData.pitch_rate*PI/180; 
+      giro_data[2] = _getData.yaw_rate*PI/180;
+      
+      delta_data = getTimeMsec() - actual_time;
+      actual_time = getTimeMsec();
+      
+      printf("\n\rdelta time %f\n\r",delta_data/1000);
+      
+      rungeKutta(qDCM,giro_data,quat, delta_data/1000, newquat);
+      quat2euler(newquat,euler);
+      
+      printf("\n\rROLL %f\n\r",euler[0]*180/PI);
+      printf("PITCH %f\n\r",euler[1]*180/PI);
+      printf("YAW %f\n\r",euler[2]*180/PI);
+    
+
+     for(int i=0; i< 4; i++)     
+         quat[i]=newquat[i];
+
+      //usleep(10000);
+      
+     // system("clear");
   }
         
   
@@ -141,24 +173,19 @@ int main(int argc, char **argv)
   return 0;
 }
 
-
-attitude orientation(float pitch_rate, float yaw_rate, float roll_rate)
+double getTimeMsec()
 {
+  struct timespec event_ts = {0,0};
+  
+  clock_gettime(CLOCK_MONOTONIC, &event_ts);
+  return ((event_ts.tv_sec)*1000.0)+((event_ts.tv_nsec)/10000000.0);
 
-   attitude _att;
-   
-   pitch = pitch + pitch_rate*0.01;
-   roll = roll + roll_rate*0.01;
-   yaw = yaw + yaw_rate*0.01;
-
-   _att.roll = roll; _att.pitch = pitch; _att.yaw=yaw;
-
-   return _att;
 }
 
 
 void init_getData()
 {
+
    if((sock_in = socket(AF_INET,SOCK_DGRAM,0)) < 0)
    {
        perror("socket");
@@ -181,6 +208,7 @@ void init_getData()
    
    fflush(stdout);
    
+
    bytes_read = recvfrom(sock_in,rcv_data,1024,0,(struct sockaddr*)&client_addr_in,&addr_len);
    rcv_data[bytes_read] = '\0';
    
@@ -194,11 +222,18 @@ void init_getData()
 	&fdmData[X_ACCEL],&fdmData[Y_ACCEL],&fdmData[Z_ACCEL],
 	&fdmData[ROLL_RATE],&fdmData[PITCH_RATE],&fdmData[YAW_RATE]);
 
-    //print data to screen for monitoring purpose
-    sprintf(txr_data,"\nSensor Data\nLAT %f\nLON %f\nALT %f\nAIRSPEED %f\nHEAD %f\nX_accl%f\nY_accel%f\nZ_accel%f\nP_rate%f\nR_rate%f\nY_rate%f\n",
+    	//print data to screen for monitoring purpose
+    	sprintf(txr_data,"\nSensor Data\nLAT %f\nLON %f\nALT %f\nAIRSPEED %f\nHEAD %f\nX_accl%f\nY_accel%f\nZ_accel%f\nR_rate%f\nP_rate%f\nY_rate%f\n",
 	_getData.latitude,fdmData[LONGITUDE],fdmData[ALTITUDE],
 	fdmData[AIRSPEED],fdmData[HEADING],
 	fdmData[X_ACCEL],fdmData[Y_ACCEL],fdmData[Z_ACCEL],
 	fdmData[ROLL_RATE],fdmData[PITCH_RATE],fdmData[YAW_RATE]);
+
+
+   euler[0]=0.0; euler[1]=0.0; euler[2]= fdmData[HEADING]*PI/180;
+   euler2quat(euler, quat);
+   //print_Matrix(&DCM);
+   actual_time = getTimeMsec();
+
 }
 

@@ -181,7 +181,7 @@ void init_getData()
 8-> z accel
 9-> roll rate
 10-> pitch rate
-11> yag rate
+11> yaw rate
 	
 */
 
@@ -219,7 +219,7 @@ void *funcNAV(void *threadp)
 	&_getData.latitude,&_getData.longitude,&_getData.altitude,
 	&_getData.airspeed,&_getData.heading,
 	&_getData.x_accel,&_getData.y_accel,&_getData.z_accel,
-	&_getData.roll_rate,&_getData.pitch_rate,&_getData.yag_rate);
+	&_getData.roll_rate,&_getData.pitch_rate,&_getData.yaw_rate);
 	
     //print data to screen for monitoring purpose
 /*
@@ -227,14 +227,14 @@ void *funcNAV(void *threadp)
 	_getData.latitude,_getData.longitude,_getData.altitude,
 	_getData.airspeed,_getData.heading,
 	_getData.x_accel,_getData.y_accel,_getData.z_accel,
-	_getData.roll_rate,_getData.pitch_rate,_getData.yag_rate);
+	_getData.roll_rate,_getData.pitch_rate,_getData.yaw_rate);
 */
 
     sprintf(txr_data,"%f\n%f\n%f\n%f\n%f\n%f\n%f\n%f\n%f\n%f\n%f\n",
 	_getData.latitude,_getData.longitude,_getData.altitude,
 	_getData.airspeed,_getData.heading,
 	_getData.x_accel,_getData.y_accel,_getData.z_accel,
-	_getData.roll_rate,_getData.pitch_rate,_getData.yag_rate);
+	_getData.roll_rate,_getData.pitch_rate,_getData.yaw_rate);
 
        	}while(limit != 0);
        	
@@ -426,7 +426,7 @@ int main()
   for(i=0; i<NUM_THREADS; i++)
   {
   	CPU_ZERO(&threadcpu);
-  	CPU_SET(2,&threadcpu);
+  	CPU_SET(1,&threadcpu);
   	
   	rc = pthread_attr_init(&rt_sched_attr[i]);
   	rc = pthread_attr_setinheritsched(&rt_sched_attr[i],PTHREAD_EXPLICIT_SCHED);
