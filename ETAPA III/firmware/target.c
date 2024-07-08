@@ -85,7 +85,7 @@ void init_sendData()
    memset(&server_addr_out, 0, sizeof(struct sockaddr_in));
    server_addr_out.sin_family = AF_INET;
    server_addr_out.sin_port = htons(PORT_NUM_QGC);
-   server_addr_out.sin_addr.s_addr = inet_addr("192.168.7.2");//INADDR_ANY;
+   server_addr_out.sin_addr.s_addr = INADDR_ANY;//inet_addr("192.168.7.2");//
 //   bzero(&(server_addr_out.sin_zero),8);
    
    if(bind(sock_out,(struct sockaddr *)&server_addr_out, sizeof(struct sockaddr_in)) == -1)
@@ -128,7 +128,7 @@ void init_getData()
    
    server_addr_in.sin_family = AF_INET;
    server_addr_in.sin_port = htons(PORT_NUM_FG);
-   server_addr_in.sin_addr.s_addr = inet_addr("192.168.7.2");//INADDR_ANY;
+   server_addr_in.sin_addr.s_addr = INADDR_ANY; //inet_addr("192.168.7.2");//
    bzero(&(server_addr_in.sin_zero),8);
    
    if(bind(sock_in,(struct sockaddr *)&server_addr_in, sizeof(struct sockaddr)) == -1)

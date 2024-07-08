@@ -7,7 +7,6 @@
 #include <nav_func.h>
 
 
-
 Matrix euler2DCM(double *euler, Matrix DCM)
 {
 
@@ -127,79 +126,96 @@ Matrix DCM_Angular(double *gyro, Matrix qDCM)
 }
 
 
-double rungeKutta(Matrix DCM, double *gyro, double *quat, double delta, double *newquat)
+Matrix DCM_AngularNED(double *nav, Matrix qDCM)
 {
 
-   printf("\n-------------\n");
+     double Wx, Wy, Wz, dot_psi,dot_lambda;
+     
+     dot_psi = nav[1]/((RE(nav[3])+nav[5])*cos(nav[3]));
+     dot_lambda = -nav[0]/(RN(nav[3])+nav[5]);
+
+     Wx=0.5*(omega+dot_psi)*cos(nav[3]); Wy= 0.5*dot_lambda ; Wz=0.5*(omega+dot_psi)*sin(nav[3]); 
+     
+     qDCM.data[0][0]=0.0;	qDCM.data[0][1]=Wx;  	qDCM.data[0][2]=Wy;  	qDCM.data[0][3]=Wz;
+     qDCM.data[1][0]=-Wx;  	qDCM.data[1][1]=0.0; 	qDCM.data[1][2]=Wz;  	qDCM.data[1][3]=-Wy;
+     qDCM.data[2][0]=-Wy;  	qDCM.data[2][1]=-Wz; 	qDCM.data[2][2]=0.0; 	qDCM.data[2][3]=Wx;
+     qDCM.data[3][0]=-Wz;  	qDCM.data[3][1]=Wy;  	qDCM.data[3][2]=-Wx; 	qDCM.data[3][3]=0.0;
+     
+    return (qDCM);
+
+}
+
+double rungeKuttaAttitude(Matrix DCM, double *gyro, double *nav, double *quat, double delta, double *newquat)
+{
+
+   //printf("\n-------------\n");
    
    double antquat[4];
    
+   Matrix qDCMb, qDCMned;
+   
+   qDCMb = create_mat(4,4); 
+   qDCMned = create_mat(4,4);
  
    double k1[4], k2[4], k3[4], k4[4];
    double q1[4], q2[4], q3[4];
    double gyro1[3], gyro2[3];
    
    double normquat, normnewquat;
+   double normk1, normk2, normk3, normk4;
 
-   normquat = norm(quat, 4);
-
-
+   normquat = 1; //norm(quat, 4);
    antquat[0]=quat[0]/normquat; antquat[1]=quat[1]/normquat;
    antquat[2]=quat[2]/normquat; antquat[3]=quat[3]/normquat;
+
    
+   DCM_Angular(gyro,qDCMb); 
+   DCM_AngularNED(nav,qDCMned);
+   mat_sum(qDCMb, qDCMned, DCM);
    
+   // Q1  
    
-   for (int i=0; i<3; i++)
-   {
-      gyro1[i] = gyro[i];//+0.5*delta;
-      gyro2[i] = gyro[i];//+delta;
-   }
-   
-   // Q0
-   
-   DCM_Angular(gyro, DCM); 
    mat_dot_vector(DCM,antquat, k1);  
+   normk1 = 1; //norm(k1, 4);
    
    for (int i=0; i<4; i++)
    {  
-      k1[i] = delta*k1[i];
+      k1[i] = delta*k1[i]/normk1;
       q1[i] = antquat[i]+0.5*k1[i];
    }
      
-   // Q1  
-   DCM_Angular(gyro1, DCM);   
+   // Q2  
+ 
    mat_dot_vector(DCM, q1, k2);
-   
+   normk2 = 1; //norm(k2, 4);
    
    for (int i=0; i<4; i++)
    {
-      k2[i] = delta*k2[i];
+      k2[i] = delta*k2[i]/normk2;
       q2[i] = antquat[i]+0.5*k2[i];
    }
 
-   //Q2
-   DCM_Angular(gyro1, DCM);      
+   //Q3    
    mat_dot_vector(DCM,q2, k3);
-
+   normk3 = 1; //norm(k3, 4);
    
    for (int i=0; i<4; i++)
    {
-      k3[i] = delta*k3[i];
+      k3[i] = delta*k3[i]/normk3;
       q3[i] = antquat[i]+k3[i];
    }
    
-   //Q3
+   //Q4
    
-   DCM_Angular(gyro2, DCM);   
    mat_dot_vector(DCM,q3, k4);
- 
+   normk4 = 1; //norm(k4, 4);
     for (int i=0; i<4; i++)
    {
-      newquat[i] = antquat[i]+delta*(k1[i] + 2*k2[i]+ 2*k3[i] + k4[i])/6;
-      printf("%f ",newquat[i]);
+      newquat[i] = antquat[i]+(k1[i] + 2*k2[i]+ 2*k3[i] + delta*k4[i]/normk4)/6;
+      //printf("%f ",newquat[i]);
    }
 
-    normnewquat = norm(newquat,4);
+    normnewquat = 1; //norm(newquat,4);
 
     newquat[0]=newquat[0]/normnewquat; newquat[1]=newquat[1]/normnewquat;
     newquat[2]=newquat[2]/normnewquat; newquat[3]=newquat[3]/normnewquat;   
@@ -209,6 +225,90 @@ double rungeKutta(Matrix DCM, double *gyro, double *quat, double delta, double *
 }
 
 
+double navEquations(double *accel_NED, double *nav,double *dot_nav)
+{
 
+   double Vn, Ve, Vd, Asn, Ase, Asd;
+   double lat, lon, alt;
+   Asn = accel_NED[1]; Ase = accel_NED[2]; Asd = accel_NED[3];
+   Vn = nav[0]; Ve = nav[1]; Vd = nav[2];
+   lat = nav[3]; lon = nav[4]; alt = nav[5];
+   
+   dot_nav[0] = Asn + Vn/(RN(lat)+alt)*Vd-(2*omega*sin(lat)+Ve/(RE(lat)+alt)*tan(lat))*Ve;
+   dot_nav[1] = Ase + (2*omega*sin(lat)+Ve/(RE(lat)+alt)*tan(lat))*Vn+(2*omega*cos(lat)+Ve/(RE(lat)+alt)*tan(lat))*Vd;
+   dot_nav[2] = Asd - (2*omega*cos(lat)+Ve/(RE(lat)+alt)*tan(lat))*Ve-Vn/(RN(lat)+alt)*Vn+go*(1+0.0052884*sin(lat)*sin(lat))*(1-2*alt/Re(lat));
+   dot_nav[3] = Vn/(RN(lat)+alt);
+   dot_nav[4] = Ve/((Re(lat)+alt)*cos(lat));
+   dot_nav[5] = -Vd;
+
+}
+
+double rungeKuttaNavigation(double *accel, double *nav, double *quat, double delta, double *newnav)
+{
+
+   double accel_NED[4], accel_B[4], quat4[4];
+   double k1[6], k2[6], k3[6], k4[6];
+   double q1[6], q2[6], q3[6];
+   
+   double nav1[6], nav2[6];
+
+   accel_B[0]=0.0; accel_B[1]= accel[0]; accel_B[2]= accel[1]; accel_B[3]=accel[2];
+
+   divQuat(accel_B,quat,quat4);
+   prodQuat(quat,quat4,accel_NED);
+   
+   
+   for (int i=0; i<6; i++)
+   {  
+      nav1[i] = nav[i]+0.5*delta;
+      nav2[i] = nav[i]+delta;
+   }
+   
+   //printf("\n\r-----------ACCEL NED ------\n\r");
+
+   // Q0
+   
+   navEquations(accel_NED,nav,k1);  
+   
+   for (int i=0; i<4; i++)
+   {  
+      k1[i] = delta*k1[i];
+      q1[i] = nav[i]+0.5*k1[i];
+   }
+    
+   // Q1    
+   navEquations(accel_NED,nav,k2); 
+   
+   
+   for (int i=0; i<4; i++)
+   {
+      k2[i] = delta*k2[i];
+      q2[i] = nav[i]+0.5*k2[i];
+   }
+
+   //Q2
+   navEquations(accel_NED,nav,k3); 
+
+   
+   for (int i=0; i<4; i++)
+   {
+      k3[i] = delta*k3[i];
+      q3[i] = nav[i]+k3[i];
+   }
+   
+   //Q3
+   
+   navEquations(accel_NED,nav,k4); 
+ 
+    for (int i=0; i<6; i++)
+   {
+      newnav[i] = nav[i]+(k1[i] + 2*k2[i]+ 2*k3[i] + delta*k4[i])/6;
+      //printf("%f ",newnav[i]);
+   }
+
+    //printf("\n\r-----------------\n\r");
+
+    return (*newnav);
+}
 
 

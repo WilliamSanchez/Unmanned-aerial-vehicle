@@ -8,6 +8,7 @@
 
 #include <pthread.h>
 #include <sched.h>
+#include <time.h>
 #include <semaphore.h>
 
 #include <sys/types.h>
@@ -16,11 +17,12 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <string.h>
-#include <math.h>
 
 #include "dqData.h"
 #include "matrices.h"
 #include "nav_func.h"
+
+#include <time.h>
 
 
 #define sensor_data
@@ -40,7 +42,7 @@
 #define ROLL_RATE		10
 #define YAW_RATE		11
 
-#define PI 			3.14159265358979
+#define PI 3.14159265358979
 
 #define BUF_SIZE 10
 #define PORT_NUM 4500
@@ -68,13 +70,11 @@ int abortProgram = 0;
 
 
 double giro_data[3];
-double accel_data[3];
 Matrix DCM, qDCM;
 double euler[3];
 double quat[4], newquat[4];
 double actual_time= 0.0;
 double delta_data = 0.0;
-double NAV[6],newNAV[6];
  
 void endProgram(int sig)
 {
@@ -145,43 +145,25 @@ int main(int argc, char **argv)
       giro_data[1] = _getData.pitch_rate*PI/180; 
       giro_data[2] = _getData.yaw_rate*PI/180;
       
-      accel_data[0] = foot2meter(_getData.x_accel); 
-      accel_data[1] = foot2meter(_getData.y_accel); 
-      accel_data[2] = foot2meter(_getData.z_accel);
-      
       delta_data = getTimeMsec() - actual_time;
       actual_time = getTimeMsec();
       
       printf("\n\rdelta time %f\n\r",delta_data/1000);
       
-      //rungeKutta(qDCM,giro_data,quat, delta_data/1000, newquat);
-      //rungeKuttaAttitude(Matrix DCM, double *gyro, double *nav, double *quat, double delta, double *newquat);
-      rungeKuttaAttitude(qDCM, giro_data, NAV, quat, delta_data/1000, newquat);
-      
-      //double rungeKuttaNavigation(double *accel, double *nav, double *quat, double delta, double *newnav);
-      rungeKuttaNavigation(accel_data, NAV, newquat, delta_data/1000, newNAV);
-
+      rungeKutta(qDCM,giro_data,quat, delta_data/1000, newquat);
       quat2euler(newquat,euler);
       
       printf("\n\rROLL %f\n\r",euler[0]*180/PI);
       printf("PITCH %f\n\r",euler[1]*180/PI);
       printf("YAW %f\n\r",euler[2]*180/PI);
-      
-      printf("\n\rLAT %f\n\r",newNAV[3]*180/PI);
-      printf("LON %f\n\r",newNAV[4]*180/PI);
-      printf("ALT %f\n\r",newNAV[5]);
-      printf("VEL %f\n\r",sqrt(newNAV[0]*newNAV[0]+newNAV[1]*newNAV[1]+newNAV[2]*newNAV[2]));
     
 
      for(int i=0; i< 4; i++)     
          quat[i]=newquat[i];
 
-     for(int i=0; i< 4; i++)     
-         NAV[i]=newNAV[i];
-
       //usleep(10000);
       
-      //system("clear");
+     // system("clear");
   }
         
   
@@ -196,7 +178,7 @@ double getTimeMsec()
   struct timespec event_ts = {0,0};
   
   clock_gettime(CLOCK_MONOTONIC, &event_ts);
-  return ((event_ts.tv_sec)*1000.0)+((event_ts.tv_nsec)/1000000.0);
+  return ((event_ts.tv_sec)*1000.0)+((event_ts.tv_nsec)/10000000.0);
 
 }
 
@@ -248,9 +230,8 @@ void init_getData()
 	fdmData[ROLL_RATE],fdmData[PITCH_RATE],fdmData[YAW_RATE]);
 
 
-   euler[0]=0.0; euler[1]=0.0; euler[2]=fdmData[HEADING]*PI/180;
+   euler[0]=0.0; euler[1]=0.0; euler[2]= fdmData[HEADING]*PI/180;
    euler2quat(euler, quat);
-   NAV[0]=0.0; NAV[1]=0.0; NAV[2]=0.0; NAV[3]=_getData.latitude*PI/180; NAV[4]=fdmData[LONGITUDE]*PI/180; NAV[5]= foot2meter(fdmData[ALTITUDE]);
    //print_Matrix(&DCM);
    actual_time = getTimeMsec();
 

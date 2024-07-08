@@ -1,16 +1,20 @@
 #!/bin/sh
 
 echo "Starting program $1"
-
-program
-protocol
-
+addr=localhost
+protocol=FGProtocol
+ 
 if [ "$1" = "fgfs_uav" ] || [ -z "$1" ]; then 
  program=fgfs_uav 
  protocol=UAVProtocol
-else 
+elif [ "$1" = "target" ]; then
+ cp matrices.c *.h ~/Documents/Embedded_Systems/Embedded_Linux/EmbeddedLinuxSystems/Buildroot/files/uav_project
+ cp target.c ~/Documents/Embedded_Systems/Embedded_Linux/EmbeddedLinuxSystems/Buildroot/files/uav_project/uav_project.c
+ sudo rm -rf ~/Documents/Embedded_Systems/Embedded_Linux/QEMU/buildroot/output/build/uav_project*
+ sudo make
+ addr=192.168.1.100
+else
  program="$1" 
- protocol=FGProtocol
 fi
 
 FGFS=fgfs  
@@ -24,27 +28,27 @@ make clean
 #--httpd=8088 --generic=socket,out,100,127.0.0.1,5500,udp,UAVProtocol
 #--parking-id=T7-06
 
-make $program 
+if [ $1 != "target" ]; then make $program; fi
 
 gnome-terminal --tab -- ${FGFS} --aircraft=777-300\
 			--airport=KJFK\
 			--parking-id=T7-06\
 			--httpd=8088\
 			--flight-plan="$flightPlan"\
-			--generic=socket,out,100,127.0.0.1,5500,udp,"$protocol"&
+			--generic=socket,out,100,"$addr",udp,"$protocol"&
 
-echo "Press [ENTER] to continue" 
+echo "Press [ENTER] to continue"
 read var
- 
-if [ "$1" = "main" ]; then  
+
+if [ "$1" = "main" ]; then
    sudo $(exec) "./$program"&
    echo "FINISH PROGRAM"
-else
+elif [ "$1" != "target" ]; then
    exec $program -d&
 fi
-wait	
+wait
 
-
-
+#sudo kill -9 $(pgrep -f "/bin/bash ./simulation")
+#sudo kill -9 $(pidof ./build/examples/ric/nearRT-RIC)
 #lsof -i:<port>
-#kill <pid>
+#kill -9 <pid>
