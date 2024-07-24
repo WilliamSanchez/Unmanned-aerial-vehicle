@@ -88,8 +88,8 @@ void dataUAV::sendData(){
 
     data.append("Hello from GCS");
     //_socket->writeDatagram(data,QHostAddress(dataIP),4500);
-    _socket->writeDatagram(data,QHostAddress::LocalHost,4500);
-    //_socket->writeDatagram(data,QHostAddress("192.168.7.2"),4500);  //processor OK
+    //_socket->writeDatagram(data,QHostAddress::LocalHost,4500);
+    _socket->writeDatagram(data,QHostAddress("192.168.1.100"),4500);  //processor OK
     //_socket->writeDatagram(data,QHostAddress("192.168.15.55"),4500);
     qDebug()<<"Send data";
 
@@ -102,13 +102,13 @@ void dataUAV::connectIP(QString addressIP)
     dataIP = addressIP.toStdString().c_str();
 
     if(strcmp(dataIP,"localhost") || strcmp(dataIP,"")) {
-         _socket->bind(QHostAddress::LocalHost,4500);
+         //_socket->bind(QHostAddress::LocalHost,4500);
     }else{
-        _socket->bind(QHostAddress(addressIP),4500);
+        //_socket->bind(QHostAddress(addressIP),4500);
     }
     //_socket->bind(QHostAddress::LocalHost,4500);
     //_socket->bind(QHostAddress::Any,4500);
-    //_socket->bind(QHostAddress("192.168.7.1"),4500);    //processor OK
+    _socket->bind(QHostAddress("192.168.1.100"),4500);    //processor OK
     connect(_socket,SIGNAL(readyRead()),this,SLOT(readData()));
   qDebug()<< addressIP;
 }
@@ -136,7 +136,7 @@ void dataUAV::readData(){
     _Roll_rate =     list.at(8).toDouble();
     _Pitch_rate =    list.at(9).toDouble();
     _Yaw_rate =      list.at(10).toDouble();
-
+/*
     qDebug()<<"Mensage from "<< sender.toString();
     qDebug()<<"Message port "<<senderPort;
     qDebug()<<"Latitude: "<< list.at(0);
@@ -150,7 +150,7 @@ void dataUAV::readData(){
     qDebug()<<"Roll_rate: "<< list.at(8);
     qDebug()<<"Pitch_rate: "<< list.at(9);
     qDebug()<<"Yaw_rate: "<< list.at(10);
-
+*/
     emit latitudeChanged();
     emit longitudeChanged();
 }

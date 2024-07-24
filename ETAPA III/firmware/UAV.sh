@@ -11,6 +11,8 @@ elif [ "$1" = "target" ]; then
  cp matrices.c *.h ~/Documents/Embedded_Systems/Embedded_Linux/EmbeddedLinuxSystems/Buildroot/files/uav_project
  cp target.c ~/Documents/Embedded_Systems/Embedded_Linux/EmbeddedLinuxSystems/Buildroot/files/uav_project/uav_project.c
  sudo rm -rf ~/Documents/Embedded_Systems/Embedded_Linux/QEMU/buildroot/output/build/uav_project*
+ echo "Exit of program"
+ exit
  sudo make
  addr=192.168.1.100
 else
@@ -35,7 +37,8 @@ gnome-terminal --tab -- ${FGFS} --aircraft=777-300\
 			--parking-id=T7-06\
 			--httpd=8088\
 			--flight-plan="$flightPlan"\
-			--generic=socket,out,100,"$addr",udp,"$protocol"&
+			--generic=socket,out,50,192.168.1.100,5500,udp,"$protocol"\
+			--generic=socket,in,100,"$addr",192.168.1.1,udp,"$protocol"&
 
 echo "Press [ENTER] to continue"
 read var
