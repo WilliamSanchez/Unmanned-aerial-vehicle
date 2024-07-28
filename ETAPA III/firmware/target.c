@@ -360,11 +360,14 @@ void *funcCTL(void *threadp)
     struct controlFG cdata;
     int limit=0, release=0, cpucore, i;
     threadParams_t *threadParams=(threadParams_t*)threadp;
-    unsigned int requred_test_cycles = 100;
+    unsigned int _elevator = 0;
+    unsigned int _aileron = 0;
+    unsigned int _throttle = 0;
+    unsigned int _rudder = 0;
     
     char buf_send[10] = "Hola\n";
 //      numBytes_out = strlen(buf);
-      char data_to_uc[128]; 
+      char data_to_uc[1024]; 
     
     while(!abortTest)
     {
@@ -380,13 +383,19 @@ void *funcCTL(void *threadp)
        	do
        	{
        	
-       	    read(fd_uc, data_to_uc, 20);
-       	    printf("Data from microcontroller %s",data_to_uc);
+       	    read(fd_uc, data_to_uc, 32);
+       	    printf("Data from microcontroller %s\n\r",data_to_uc);
+       // 	ELEVATOR 	\ 	AILERON 	\ 	RUDDER 	\ 	THROTTLE
+      sscanf(data_to_uc,"%d %d %d %d",&_elevator,&_aileron,&_rudder,&_throttle);
+       	
+      printf("Elevator %d, Aileron %d, Rudder %d,Throttle %d\n\t", _elevator, _aileron, _rudder, _throttle);
        	    
-       	          cdata.aileron = 2*cont/200 - 1;
-      cdata.rudder = 2*cont/200 - 1;
-      cdata.throttle = cont/200;
-      cdata.elevator = 2*cont/200 - 1;
+      cdata.aileron = (2*(double)_aileron)/3300-1;
+      cdata.rudder = (2*(double)_rudder)/3300-1;
+      cdata.throttle = (double)_throttle/255;
+      cdata.elevator = (2*(double)_elevator)/3300-1;
+      
+      printf("Send data control Elevator %03f, Aileron %03f, Rudder %03f, Throttle %03f\n\t",cdata.elevator, cdata.aileron, cdata.rudder, cdata.throttle);
       
       swap64(&cdata.aileron);
       swap64(&cdata.rudder);

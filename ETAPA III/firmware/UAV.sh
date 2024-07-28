@@ -37,8 +37,8 @@ gnome-terminal --tab -- ${FGFS} --aircraft=777-300\
 			--parking-id=T7-06\
 			--httpd=8088\
 			--flight-plan="$flightPlan"\
-			--generic=socket,out,50,192.168.1.100,5500,udp,"$protocol"\
-			--generic=socket,in,100,"$addr",192.168.1.1,udp,"$protocol"&
+			--generic=socket,out,20,192.168.1.100,5500,udp,"$protocol"\
+			--generic=socket,in,50,192.168.1.1,5501,udp,"$protocol"&
 
 echo "Press [ENTER] to continue"
 read var
