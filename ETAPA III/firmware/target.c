@@ -390,10 +390,10 @@ void *funcCTL(void *threadp)
        	
       printf("Elevator %d, Aileron %d, Rudder %d,Throttle %d\n\t", _elevator, _aileron, _rudder, _throttle);
        	    
-      cdata.aileron = (2*(double)_aileron)/3300-1;
-      cdata.rudder = (2*(double)_rudder)/3300-1;
+      cdata.aileron = 2*(3300 - (double)_aileron)/3300-1;
+      cdata.rudder = 2*(3300 - (double)_rudder)/3300-1;
       cdata.throttle = (double)_throttle/255;
-      cdata.elevator = (2*(double)_elevator)/3300-1;
+      cdata.elevator = 2*(3300 - (double)_elevator)/3300-1;
       
       printf("Send data control Elevator %03f, Aileron %03f, Rudder %03f, Throttle %03f\n\t",cdata.elevator, cdata.aileron, cdata.rudder, cdata.throttle);
       

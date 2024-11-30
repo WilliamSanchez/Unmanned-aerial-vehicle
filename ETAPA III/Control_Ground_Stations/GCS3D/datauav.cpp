@@ -88,8 +88,8 @@ void dataUAV::sendData(){
 
     data.append("Hello from GCS");
     //_socket->writeDatagram(data,QHostAddress(dataIP),4500);
-    //_socket->writeDatagram(data,QHostAddress::LocalHost,4500);
-    _socket->writeDatagram(data,QHostAddress("192.168.1.100"),4500);  //processor OK
+    _socket->writeDatagram(data,QHostAddress::LocalHost,4500);
+    //_socket->writeDatagram(data,QHostAddress("192.168.1.100"),4500);  //processor OK
     //_socket->writeDatagram(data,QHostAddress("192.168.15.55"),4500);
     qDebug()<<"Send data";
 
@@ -106,9 +106,9 @@ void dataUAV::connectIP(QString addressIP)
     }else{
         //_socket->bind(QHostAddress(addressIP),4500);
     }
-    //_socket->bind(QHostAddress::LocalHost,4500);
+    _socket->bind(QHostAddress::LocalHost,4500);
     //_socket->bind(QHostAddress::Any,4500);
-    _socket->bind(QHostAddress("192.168.1.100"),4500);    //processor OK
+    //_socket->bind(QHostAddress("192.168.1.100"),4500);    //processor OK
     connect(_socket,SIGNAL(readyRead()),this,SLOT(readData()));
   qDebug()<< addressIP;
 }

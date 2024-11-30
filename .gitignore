@@ -1,3 +1,6 @@
+*.o
+**/*.o
+
 /ETAPA III/firmware/*.O
 /ETAPA III/Control_Ground_Stations/build-*/
 /ETAPA III/build-*/
