@@ -7,7 +7,7 @@ import Esri.ArcGISExtras
 import "qrc:/ui/assets/functions.js" as DQData
 
 Rectangle {
-    width: 3*parent.width/4
+    width: parent.width
     height: 4*parent.height/5
     visible: true
     id: mapScreen
@@ -21,7 +21,7 @@ Rectangle {
     anchors{
         top:  orientationBar.bottom
         bottom: parent.bottom
-        right: controlScreen.left
+        //right: controlScreen.left
     }
 
     property real _lat: 49.2827

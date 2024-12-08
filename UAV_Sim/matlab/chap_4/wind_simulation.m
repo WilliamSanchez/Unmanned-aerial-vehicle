@@ -25,7 +25,7 @@ classdef wind_simulation < handle
             a2 = WIND.Va0/WIND.L_u;
 
             b1 = WIND.sigma_v*sqrt(3*WIND.Va0/WIND.L_v);
-            b2 = WIND.Va0/WIND.L_v;
+            b2 = WIND.Va0/(sqrt(3)*WIND.L_v);
             b3 = WIND.Va0/WIND.L_v;
 
             c1 = WIND.sigma_w*sqrt(3*WIND.Va0/WIND.L_w);
@@ -54,9 +54,7 @@ classdef wind_simulation < handle
         end
         %----------------------------
         function self = gust(self)
-            ur = randn;
-            vr = randn;
-            wr = randn;
+            ur = randn; vr = randn; wr = randn;
             self.gust_state = self.gust_state + self.Ts*(self.A*self.gust_state + self.B*[ur vr wr]');
             self.gust_ = self.C*self.gust_state;
         end

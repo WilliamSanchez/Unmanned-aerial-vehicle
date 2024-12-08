@@ -19,8 +19,39 @@ else
  program="$1" 
 fi
 
+echo "Choose an dparture pleace"
+echo "1-> New York"
+echo "2-> Dublin"
+echo "3-> London"
+echo "4-> Zunich"
+
+flightPlan="../KJFK-CYYZ.xml" 
+airport="KJFK"
+parking="T7-06"
+
+read departure
+
+if [ $departure -eq 1 ]; then
+	flightPlan="../KJFK-CYYZ.xml" 
+	airport="KJFK"
+	parking="T7-06"
+elif [ $departure -eq 2 ]; then
+	flightPlan="../EIDW-EGLL.xml" 
+	airport="EIDW"
+	parking="120R"
+elif [ $departure -eq 3 ]; then
+	flightPlan="../EGLL-LFPG.xml" 
+	airport="EGLL"
+	parking="592"
+elif [ $departure -eq 4 ]; then
+	flightPlan="../LSZH-LIMC.xml" 
+	airport="LSZH"
+	parking="E27"
+fi
+
 FGFS=fgfs  
-flightPlan="../KJFK-CYYZ.xml"    
+#flightPlan="../KJFK-CYYZ.xml"  
+#flightPlan="../EIDW-EGLL.xml"    
 
 echo "Execuitn of file $program"
 
@@ -33,12 +64,13 @@ make clean
 if [ $1 != "target" ]; then make $program; fi
 
 gnome-terminal --tab -- ${FGFS} --aircraft=777-300\
-			--airport=KJFK\
-			--parking-id=T7-06\
+			--airport="$airport"\
+			--parking-id="$parking"\
 			--httpd=8088\
 			--flight-plan="$flightPlan"\
 			--generic=socket,out,20,127.0.0.1.100,5500,udp,"$protocol"\
 			--generic=socket,in,50,127.0.0.1,5501,udp,"$protocol"&
+
 
 echo "Press [ENTER] to continue"
 read var

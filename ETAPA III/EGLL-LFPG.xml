@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <version type="int">2</version>
+  <flight-rules type="string">V</flight-rules>
+  <flight-type type="string">G</flight-type>
+  <estimated-duration-minutes type="int">570</estimated-duration-minutes>
+  <departure>
+    <airport type="string">EGLL</airport>
+    <sid type="string">DEFAULT</sid>
+    <runway type="string">27L</runway>
+  </departure>
+  <destination>
+    <airport type="string">LFPG</airport>
+    <approach type="string">DEFAULT</approach>
+    <runway type="string">08L</runway>
+  </destination>
+  <alternate type="string">LFPG</alternate>
+  <cruise>
+    <altitude-ft type="int">15050</altitude-ft>
+    <knots type="int">320</knots>
+  </cruise>
+  <route>
+    <wp>
+      <type type="string">runway</type>
+      <departure type="bool">true</departure>
+      <ident type="string">27L</ident>
+      <icao type="string">EGLL</icao>
+    </wp>
+    <wp n="1">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">3083</altitude-ft>
+      <ident type="string">27L-3</ident>
+      <lon type="double">-0.5668926046</lon>
+      <lat type="double">51.46445689</lat>
+    </wp>
+    <wp n="2">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">6083</altitude-ft>
+      <ident type="string">27L-6</ident>
+      <lon type="double">-0.6468388368</lon>
+      <lat type="double">51.46408633</lat>
+    </wp>
+    <wp n="3">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <ident type="string">DEP-3</ident>
+      <lon type="double">-0.7030402296</lon>
+      <lat type="double">51.42858271</lat>
+    </wp>
+    <wp n="4">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <ident type="string">DEP-4</ident>
+      <lon type="double">-0.7026363315</lon>
+      <lat type="double">51.37864447</lat>
+    </wp>
+    <wp n="5">
+      <type type="string">navaid</type>
+      <ident type="string">OCK</ident>
+      <lon type="double">-0.447222</lon>
+      <lat type="double">51.305</lat>
+    </wp>
+    <wp n="6">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <ident type="string">APP-4</ident>
+      <lon type="double">2.191684811</lon>
+      <lat type="double">49.01148127</lat>
+    </wp>
+    <wp n="7">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4392</altitude-ft>
+      <ident type="string">08L-12</ident>
+      <lon type="double">2.249548162</lon>
+      <lat type="double">48.97913583</lat>
+    </wp>
+    <wp n="8">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">2392</altitude-ft>
+      <ident type="string">08L-8</ident>
+      <lon type="double">2.350394826</lon>
+      <lat type="double">48.98473338</lat>
+    </wp>
+    <wp n="9">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">2392</altitude-ft>
+      <ident type="string">08L-GS</ident>
+      <lon type="double">2.393748088</lon>
+      <lat type="double">48.98711225</lat>
+    </wp>
+    <wp n="10">
+      <type type="string">runway</type>
+      <approach type="bool">true</approach>
+      <ident type="string">08L</ident>
+      <icao type="string">LFPG</icao>
+    </wp>
+  </route>
+</PropertyList>

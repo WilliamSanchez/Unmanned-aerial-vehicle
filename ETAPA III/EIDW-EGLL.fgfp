@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <version type="int">2</version>
+  <flight-rules type="string">V</flight-rules>
+  <flight-type type="string">G</flight-type>
+  <estimated-duration-minutes type="int">858</estimated-duration-minutes>
+  <departure>
+    <airport type="string">EIDW</airport>
+  </departure>
+  <destination>
+    <airport type="string">EGLL</airport>
+  </destination>
+  <alternate type="string">LFPG</alternate>
+  <cruise>
+    <altitude-ft type="int">15050</altitude-ft>
+    <knots type="int">290</knots>
+  </cruise>
+  <route>
+    <wp>
+      <type type="string">navaid</type>
+      <ident type="string">DUB</ident>
+      <lon type="double">-6.307108</lon>
+      <lat type="double">53.499375</lat>
+    </wp>
+    <wp n="1">
+      <type type="string">navaid</type>
+      <airway type="string">UL18</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">LIPGO</ident>
+      <lon type="double">-5.5</lon>
+      <lat type="double">53.063889</lat>
+    </wp>
+    <wp n="2">
+      <type type="string">navaid</type>
+      <airway type="string">UL18</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">BADSI</ident>
+      <lon type="double">-4.771389</lon>
+      <lat type="double">52.658333</lat>
+    </wp>
+    <wp n="3">
+      <type type="string">navaid</type>
+      <airway type="string">UL18</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">DEKAP</ident>
+      <lon type="double">-4.3725</lon>
+      <lat type="double">52.431111</lat>
+    </wp>
+    <wp n="4">
+      <type type="string">navaid</type>
+      <airway type="string">UL18</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">MEDOG</ident>
+      <lon type="double">-3.549444</lon>
+      <lat type="double">51.950278</lat>
+    </wp>
+    <wp n="5">
+      <type type="string">navaid</type>
+      <airway type="string">UL18</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">DIKAS</ident>
+      <lon type="double">-3.259167</lon>
+      <lat type="double">51.776944</lat>
+    </wp>
+    <wp n="6">
+      <type type="string">navaid</type>
+      <airway type="string">UL9</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">BASET</ident>
+      <lon type="double">-1.71</lon>
+      <lat type="double">51.563889</lat>
+    </wp>
+    <wp n="7">
+      <type type="string">navaid</type>
+      <airway type="string">UL18</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">INLAK</ident>
+      <lon type="double">-1.524167</lon>
+      <lat type="double">51.478056</lat>
+    </wp>
+    <wp n="8">
+      <type type="string">navaid</type>
+      <airway type="string">UL18</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">NIGIT</ident>
+      <lon type="double">-1.170833</lon>
+      <lat type="double">51.313056</lat>
+    </wp>
+    <wp n="9">
+      <type type="string">navaid</type>
+      <airway type="string">UL18</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">VAPID</ident>
+      <lon type="double">-1.045</lon>
+      <lat type="double">51.253889</lat>
+    </wp>
+    <wp n="10">
+      <type type="string">navaid</type>
+      <airway type="string">UL18</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">MID</ident>
+      <lon type="double">-0.625</lon>
+      <lat type="double">51.053889</lat>
+    </wp>
+    <wp n="11">
+      <type type="string">navaid</type>
+      <ident type="string">OCK</ident>
+      <lon type="double">-0.447222</lon>
+      <lat type="double">51.305</lat>
+    </wp>
+  </route>
+</PropertyList>

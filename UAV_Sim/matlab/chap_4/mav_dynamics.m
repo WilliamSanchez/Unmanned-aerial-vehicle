@@ -262,7 +262,7 @@ classdef mav_dynamics < handle
             self.true_state.Va = self.Va;
             self.true_state.alpha = self.alpha;
             self.true_state.beta = self.beta;
-            self.true_state.Vg = sqrt(self.state(4)^2 + self.state(5)^2 + self.state(6)^2);
+            self.true_state.Vg = 25;
             self.true_state.chi = 54;
             self.true_state.gamma = 23;
             self.true_state.wn = self.wind(1);

@@ -5,22 +5,23 @@ Rectangle{
     id: controlScreen
     anchors{
         top: parent.top
-        bottom: parent.bottom
+        //bottom: parent.bottom
         right: parent.right
     }
     color: "green"
     width: parent.width/4
+    height: orientationBar.height
 
     Grid{
         id: start_CGS
         rows: 2
 
          Rectangle{
-             height: controlScreen.height/20
+             height: controlScreen.height/4
              width: controlScreen.width
              TextField{
                  width: 2*controlScreen.width/3
-                 height:controlScreen.height/20
+                 height:controlScreen.height/4
                  id: addressIP
                  placeholderText: qsTr("Enter IP")
              }
@@ -28,7 +29,7 @@ Rectangle{
              Button{
                  anchors.left: addressIP.right
                  width: controlScreen.width/3
-                 height: controlScreen.height/20
+                 height: controlScreen.height/4
                  text: 'connect'
                  visible: true
                  onClicked: {
@@ -39,7 +40,7 @@ Rectangle{
          }
 
         Button{
-            height: controlScreen.height/20
+            height: controlScreen.height/4
             width: controlScreen.width
             text: 'START'
             visible: true

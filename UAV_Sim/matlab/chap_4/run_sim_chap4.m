@@ -21,9 +21,9 @@ sim_time = SIM.start_time;
 disp('Type CTRL-C to exit');
 while sim_time < SIM.end_time
     %-------set control surfaces-------------
-    delta_e = -0.2;
-    delta_t = 0.5;
-    delta_a = -0.01;  
+    delta_e = 0; %-0.2;
+    delta_t = 0.25;
+    delta_a = 0; %-0.01;  
     delta_r = 0;
     delta = [delta_e; delta_t; delta_a; delta_r];
 

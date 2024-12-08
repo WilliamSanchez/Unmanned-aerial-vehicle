@@ -1,4 +1,4 @@
-run("../parameters/simulation_parameters.m")
+run("../../parameters/simulation_parameters.m")
 
 state = msg_state();
 %mav_viewer = box_viewer();
@@ -10,7 +10,6 @@ if VIDEO == 1, video = video_writer('MAV_video.avl', SIM.ts_video); end
 
 sim_time = SIM.start_time;
 disp('Type CTRL-C to exit');
-cle
 while sim_time < SIM.end_time
     if sim_time < SIM.end_time/6
         state.pn = state.pn + SIM.ts_simulation;

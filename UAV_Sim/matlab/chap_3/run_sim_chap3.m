@@ -15,11 +15,11 @@ sim_times = SIM.start_time;
 
 while sim_times < SIM.end_time
     fx = 10;
-    fy = 10;
-    fz = 0;
+    fy = 0;
+    fz = -1;
     Mx = 0;
     My = 0;
-    Mz = 0.1;
+    Mz = 0;
     forces_moments = [fx; fy; fz; Mx; My; Mz];
 
         %-------physical system-------------
