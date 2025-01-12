@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<RCC>
+    <qresource prefix="/qml">
+        <file alias="main.qml">../../qml/main.qml</file>
+    </qresource>
+    <qresource prefix="/">
+        <file alias="../ui/assets/aircraft.png">../../ui/assets/aircraft.png</file>
+        <file alias="../ui/assets/Back.png">../../ui/assets/Back.png</file>
+        <file alias="../ui/assets/functions.js">../../ui/assets/functions.js</file>
+        <file alias="../ui/assets/marker.png">../../ui/assets/marker.png</file>
+        <file alias="../ui/assets/orientation.png">../../ui/assets/orientation.png</file>
+        <file alias="../ui/assets/Side.png">../../ui/assets/Side.png</file>
+        <file alias="../ui/assets/Top.png">../../ui/assets/Top.png</file>
+        <file alias="../ui/assets/rotate_roll.png">../../ui/assets/rotate_roll.png</file>
+        <file alias="../ui/assets/rotate_pitch.png">../../ui/assets/rotate_pitch.png</file>
+        <file alias="../ui/ControlScreen/ControlScreen.qml">../../ui/ControlScreen/ControlScreen.qml</file>
+        <file alias="../ui/MapScreen/MapScreen.qml">../../ui/MapScreen/MapScreen.qml</file>
+        <file alias="../ui/OrientationBar/Orientation.qml">../../ui/OrientationBar/Orientation.qml</file>
+        <file alias="../ui/OrientationBar/ArtificialHorizon.qml">../../ui/OrientationBar/ArtificialHorizon.qml</file>
+    </qresource>
+</RCC>
