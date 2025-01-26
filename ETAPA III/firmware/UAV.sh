@@ -27,6 +27,7 @@ echo "4-> Zurich"
 echo "5-> Madrid"
 echo "6-> Frankfurt"
 echo "7-> Medellin"
+echo "8-> Tokio"
 
 
 flightPlan="../KJFK-CYYZ.xml" 
@@ -63,6 +64,10 @@ elif [ $departure -eq 7 ]; then
 	flightPlan="../EDDF-EKCH.xml" 
 	airport="SKRG"
 	parking="11"
+elif [ $departure -eq 8 ]; then
+	flightPlan="../RJAA-RKSI.xml" 
+	airport="RJAA"
+	parking="T158B"
 fi
 
 FGFS=fgfs  

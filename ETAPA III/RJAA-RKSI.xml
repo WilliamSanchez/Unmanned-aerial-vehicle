@@ -1,0 +1,225 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <version type="int">2</version>
+  <flight-rules type="string">V</flight-rules>
+  <flight-type type="string">X</flight-type>
+  <estimated-duration-minutes type="int">569</estimated-duration-minutes>
+  <departure>
+    <airport type="string">RJAA</airport>
+    <sid type="string">DEFAULT</sid>
+    <runway type="string">34R</runway>
+  </departure>
+  <destination>
+    <airport type="string">RKSI</airport>
+    <approach type="string">DEFAULT</approach>
+    <runway type="string">15L</runway>
+  </destination>
+  <cruise>
+    <knots type="int">320</knots>
+  </cruise>
+  <route>
+    <wp>
+      <type type="string">runway</type>
+      <departure type="bool">true</departure>
+      <ident type="string">34R</ident>
+      <icao type="string">RJAA</icao>
+    </wp>
+    <wp n="1">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">3141</altitude-ft>
+      <ident type="string">34R-3</ident>
+      <lon type="double">140.3486948</lon>
+      <lat type="double">35.84585548</lat>
+    </wp>
+    <wp n="2">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">6141</altitude-ft>
+      <ident type="string">34R-6</ident>
+      <lon type="double">140.3174491</lon>
+      <lat type="double">35.8889895</lat>
+    </wp>
+    <wp n="3">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <ident type="string">DEP-3</ident>
+      <lon type="double">140.2578673</lon>
+      <lat type="double">35.90152057</lat>
+    </wp>
+    <wp n="4">
+      <type type="string">navaid</type>
+      <airway type="string">Y14</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">JEC</ident>
+      <lon type="double">133.093914</lon>
+      <lat type="double">35.531117</lat>
+    </wp>
+    <wp n="5">
+      <type type="string">navaid</type>
+      <airway type="string">G585</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">STAGE</ident>
+      <lon type="double">132.693242</lon>
+      <lat type="double">35.581019</lat>
+    </wp>
+    <wp n="6">
+      <type type="string">navaid</type>
+      <airway type="string">G585</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">SAPRA</ident>
+      <lon type="double">130.723611</lon>
+      <lat type="double">35.823889</lat>
+    </wp>
+    <wp n="7">
+      <type type="string">navaid</type>
+      <airway type="string">G585</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">KPO</ident>
+      <lon type="double">129.474333</lon>
+      <lat type="double">35.977472</lat>
+    </wp>
+    <wp n="8">
+      <type type="string">navaid</type>
+      <airway type="string">G585</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">PAROT</ident>
+      <lon type="double">128.837778</lon>
+      <lat type="double">36.344722</lat>
+    </wp>
+    <wp n="9">
+      <type type="string">navaid</type>
+      <airway type="string">G585</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">CUN</ident>
+      <lon type="double">128.325389</lon>
+      <lat type="double">36.632028</lat>
+    </wp>
+    <wp n="10">
+      <type type="string">navaid</type>
+      <airway type="string">G585</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">BIGOB</ident>
+      <lon type="double">128.164444</lon>
+      <lat type="double">36.729722</lat>
+    </wp>
+    <wp n="11">
+      <type type="string">navaid</type>
+      <airway type="string">G585</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">GOTLO</ident>
+      <lon type="double">127.964444</lon>
+      <lat type="double">36.836111</lat>
+    </wp>
+    <wp n="12">
+      <type type="string">navaid</type>
+      <airway type="string">G585</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">BULLS</ident>
+      <lon type="double">127.641111</lon>
+      <lat type="double">37.011111</lat>
+    </wp>
+    <wp n="13">
+      <type type="string">navaid</type>
+      <airway type="string">G585</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">KASKO</ident>
+      <lon type="double">127.441111</lon>
+      <lat type="double">37.126111</lat>
+    </wp>
+    <wp n="14">
+      <type type="string">navaid</type>
+      <airway type="string">G585</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">KALMA</ident>
+      <lon type="double">127.12611</lon>
+      <lat type="double">37.306111</lat>
+    </wp>
+    <wp n="15">
+      <type type="string">navaid</type>
+      <airway type="string">G585</airway>
+      <network type="int">2</network>
+      <generated type="bool">true</generated>
+      <ident type="string">SEL</ident>
+      <lon type="double">126.928611</lon>
+      <lat type="double">37.413889</lat>
+    </wp>
+    <wp n="16">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <ident type="string">APP-6</ident>
+      <lon type="double">126.4191592</lon>
+      <lat type="double">37.71710362</lat>
+    </wp>
+    <wp n="17">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <ident type="string">APP-5</ident>
+      <lon type="double">126.3570576</lon>
+      <lat type="double">37.7256145</lat>
+    </wp>
+    <wp n="18">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <ident type="string">APP-4</ident>
+      <lon type="double">126.305578</lon>
+      <lat type="double">37.69674922</lat>
+    </wp>
+    <wp n="19">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4023</altitude-ft>
+      <ident type="string">15L-12</ident>
+      <lon type="double">126.2948876</lon>
+      <lat type="double">37.64741727</lat>
+    </wp>
+    <wp n="20">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">2023</altitude-ft>
+      <ident type="string">15L-8</ident>
+      <lon type="double">126.343381</lon>
+      <lat type="double">37.59294655</lat>
+    </wp>
+    <wp n="21">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">2023</altitude-ft>
+      <ident type="string">15L-GS</ident>
+      <lon type="double">126.3642029</lon>
+      <lat type="double">37.56952744</lat>
+    </wp>
+    <wp n="22">
+      <type type="string">runway</type>
+      <approach type="bool">true</approach>
+      <ident type="string">15L</ident>
+      <icao type="string">RKSI</icao>
+    </wp>
+  </route>
+</PropertyList>
