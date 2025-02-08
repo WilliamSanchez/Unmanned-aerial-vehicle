@@ -1,5 +1,9 @@
 #!/bin/sh
 
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/william/Qt/6.8.1/gcc_64/lib
+
+ControlGroundStation=../Control_Ground_Stations/GCS3D/build/Desktop_Qt_6_8_1-Release
+
 echo "Starting program $1"
 addr=localhost
 protocol=FGProtocol
@@ -28,6 +32,8 @@ echo "5-> Madrid"
 echo "6-> Frankfurt"
 echo "7-> Medellin"
 echo "8-> Tokio"
+echo "9-> Montreal"
+echo "10-> Kuala Lumpur"
 
 
 flightPlan="../KJFK-CYYZ.xml" 
@@ -61,13 +67,21 @@ elif [ $departure -eq 6 ]; then
 	airport="EDDF"
 	parking="C16"
 elif [ $departure -eq 7 ]; then
-	flightPlan="../EDDF-EKCH.xml" 
+	flightPlan="../SKRG-SKBO.xml" 
 	airport="SKRG"
 	parking="11"
 elif [ $departure -eq 8 ]; then
 	flightPlan="../RJAA-RKSI.xml" 
 	airport="RJAA"
 	parking="T158B"
+elif [ $departure -eq 9 ]; then
+	flightPlan="../CYUL-CYYZ.xml" 
+	airport="CYUL"
+	parking="64"
+elif [ $departure -eq 10 ]; then
+	flightPlan="../WMKK-WSSS.xml" 
+	airport="WMKK"
+	parking="A51L"
 fi
 
 FGFS=fgfs  
@@ -93,8 +107,21 @@ gnome-terminal --tab -- ${FGFS} --aircraft=777-300\
 			--generic=socket,in,50,127.0.0.1,5501,udp,"$protocol"&
 
 
+
+
 echo "Press [ENTER] to continue"
 read var
+
+cd $ControlGroundStation
+gnome-terminal --tab -- $(exec) "./GCS3D"&
+
+cd ../../../../
+cd firmware
+
+pwd
+
+read
+
 
 if [ "$1" = "main" ]; then
    sudo $(exec) "./$program"&
